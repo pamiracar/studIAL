@@ -5,4 +5,3 @@ windows/** linguist-vendored
 linux/** linguist-vendored
 web/** linguist-vendored
 build/** linguist-vendored
-.dart_tool/** linguist-vendored
