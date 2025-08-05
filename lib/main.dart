@@ -9,6 +9,7 @@ import 'package:studial/mobile/pages/Giris/login_page_binding.dart';
 import 'package:studial/mobile/pages/HesapOlusturma/register_page.dart';
 import 'package:studial/mobile/pages/HesapOlusturma/register_page_binding.dart';
 import 'package:studial/responsive.dart';
+import 'package:studial/theme.dart';
 import 'package:studial/web/pages/HomeWeb/home_web_page.dart';
 
 void main() {
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'studIAL',
           initialRoute: MobileRoutes.INITIAL,
+          theme: StudialTheme.lightTheme,
+          darkTheme: StudialTheme.darkTheme,
+          themeMode: ThemeMode.system,
           getPages: [
             GetPage(name: MobileRoutes.ANASAYFA, page: () => HomePage(), binding: HomePageBinding()),
             GetPage(name: MobileRoutes.GIRIS, page: () => LoginPage(), binding: LoginPageBinding()),

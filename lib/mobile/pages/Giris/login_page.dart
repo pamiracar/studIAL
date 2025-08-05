@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:lottie/lottie.dart';
+import 'package:studial/AppRoutes.dart';
 import 'package:studial/mobile/pages/Giris/login_page_controller.dart';
+import 'package:studial/theme.dart';
 
 class LoginPage extends GetView<LoginPageController> {
   const LoginPage({super.key});
@@ -36,19 +40,102 @@ class LoginPage extends GetView<LoginPageController> {
                   style: TextStyle(
                     fontSize: 30,
                     letterSpacing: 3,
-                    fontWeight: FontWeight.w300
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
                 const SizedBox(height: 20),
                 Form(
+                  key: controller.loginFormKey,
                   child: Column(
                     children: [
-                      EmailInputFieldFb3(inputController: controller.emailController),
-                      SizedBox(height: 20,),
-                      PasswordInputFieldFb3(inputController: controller.passwordController)
+                      GlassContainer(
+                        child: TextFormField(
+                          controller: controller.emailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'E-posta boş olamaz';
+                            }
+                            if (!RegExp(
+                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                            ).hasMatch(value)) {
+                              return 'Geçerli bir e-posta adresi girin';
+                            }
+                            return null;
+                          },
+
+                          decoration: InputDecoration(
+                            hint: const Text("E-posta"),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      GlassContainer(
+                        child: Obx(() {
+                          return TextFormField(
+                            controller: controller.passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Lütfen bu alanı doldurun!";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              hint: const Text("Şifre"),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  controller.isPasswordShow.value =
+                                      !controller.isPasswordShow.value;
+                                },
+                                icon: Obx(
+                                  () => controller.isPasswordShow.value
+                                      ? Icon(Icons.visibility)
+                                      : Icon(Icons.visibility_off),
+                                ),
+                              ),
+                            ),
+                            obscureText: controller.isPasswordShow.value
+                                ? false
+                                : true,
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 30),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (controller.loginFormKey.currentState!
+                              .validate()) {}
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Giriş Yap",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300,
+                                letterSpacing: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Bir hesabın yok mu? "),
+                          GestureDetector(
+                            onTap: () => Get.toNamed(MobileRoutes.OLUSTUR),
+                            child: const Text(
+                              "Hesap Oluştur",
+                              style: TextStyle(color: Color(0xFF5A4FCF)),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -57,106 +144,3 @@ class LoginPage extends GetView<LoginPageController> {
     );
   }
 }
-
-class EmailInputFieldFb3 extends StatelessWidget {
-  final TextEditingController inputController;
-  const EmailInputFieldFb3({super.key, required this.inputController});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            offset: const Offset(12, 26),
-            blurRadius: 50,
-            spreadRadius: 0,
-            color: Colors.grey.withOpacity(.1)),
-      ]),
-      child: TextFormField(
-        controller: inputController,
-        onChanged: (value) {
-          //Do something wi
-        },
-        keyboardType: TextInputType.emailAddress,
-        style: const TextStyle(fontSize: 14, color: Colors.black),
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.email),
-          filled: true,
-          hintText: 'Enter your email',
-          hintStyle: TextStyle(color: Colors.grey.withOpacity(.75)),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-          errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PasswordInputFieldFb3 extends StatelessWidget {
-  final TextEditingController inputController;
-  const PasswordInputFieldFb3({super.key, required this.inputController});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-            offset: const Offset(12, 26),
-            blurRadius: 50,
-            spreadRadius: 0,
-            color: Colors.grey.withOpacity(.1)),
-      ]),
-      child: TextFormField(
-        controller: inputController,
-        onChanged: (value) {
-          //Do something wi
-        },
-        keyboardType: TextInputType.emailAddress,
-        style: const TextStyle(fontSize: 14, color: Colors.black),
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.password),
-          filled: true,
-          hintText: 'Enter your email',
-          hintStyle: TextStyle(color: Colors.grey.withOpacity(.75)),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20.0),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-          errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blue, width: 1.0),
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
