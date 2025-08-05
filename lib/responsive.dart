@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:studial/mobile/pages/Home/home_page.dart';
+import 'package:get/get.dart';
+import 'package:get/utils.dart';
+import 'package:studial/mobile/pages/Giris/login_page.dart';
+import 'package:studial/mobile/pages/Giris/login_page_controller.dart';
 import 'package:studial/web/pages/HomeWeb/home_web_page.dart';
 
 class ResponsiveLayout extends StatefulWidget {
@@ -14,10 +17,9 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder:(context, constraints) {
       if (constraints.maxWidth <= 800) {
-        //Mobile View
-        return HomePage();
+        Get.put(LoginPageController());
+        return LoginPage();
       } else {
-        //Web View
         return HomeWebPage();
       }
     },);
