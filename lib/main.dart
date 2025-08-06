@@ -11,8 +11,10 @@ import 'package:studial/mobile/pages/HesapOlusturma/register_page_binding.dart';
 import 'package:studial/responsive.dart';
 import 'package:studial/theme.dart';
 import 'package:studial/web/pages/HomeWeb/home_web_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+void main() async {
+  await Supabase.initialize(url: "https://uzgblabjbfztgaszafeb.supabase.co", anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6Z2JsYWJqYmZ6dGdhc3phZmViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0NjI1MjAsImV4cCI6MjA3MDAzODUyMH0.Snouvz-2_w4vyYZpw2RWuPTPtJOC3l-UkDgikjvafxU");
   runApp(const MyApp());
 }
 
