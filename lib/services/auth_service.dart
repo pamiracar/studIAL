@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
@@ -14,38 +13,40 @@ class AuthService {
       email: email,
     );
   }
+
   //Eposta, şifre, isim,sınıf seviyesi ile hesap oluşturma
-  Future<void> signUpWithProfile({
+
+  Future<void> signUpOnly({
     required String email,
     required String password,
+  }) async {
+    await _supabase.auth.signUp(email: email, password: password);
+  }
+
+  Future<void> createProfile({
     required String name,
     required String gradeLevel,
   }) async {
-    final supabase = Supabase.instance.client;
-    // 1. Kullanıcıyı kaydet
-    final signUpResponse = await supabase.auth.signUp(
-      email: email,
-      password: password,
-    );
-    final userId = signUpResponse.user?.id;
+    final userId = _supabase.auth.currentUser?.id;
+
     if (userId == null) {
-      throw Exception('Kullanıcı oluşturulamadı');
+      throw Exception("Giriş yapılmamış. UID yok.");
     }
-    // 2. Profil verisini yaz
-    final response = await supabase.from('profiles').insert({
+
+    final response = await _supabase.from('profiles').insert({
       'id': userId,
       'name': name,
-      'grade_level': gradeLevel,
+      'class_level': gradeLevel,
     });
-    if (response.error != null) {
+
+    if (response?.error != null) {
       throw Exception('Profil oluşturulamadı: ${response.error!.message}');
     }
-    debugPrint('Kayıt ve profil başarıyla oluşturuldu!');
   }
 
   //Hesaptan çıkış yapma
 
-  Future<void> signOut() async{
+  Future<void> signOut() async {
     await _supabase.auth.signOut();
   }
 }

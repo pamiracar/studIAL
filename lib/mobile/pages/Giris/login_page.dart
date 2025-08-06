@@ -101,10 +101,7 @@ class LoginPage extends GetView<LoginPageController> {
                       ),
                       SizedBox(height: 30),
                       ElevatedButton(
-                        onPressed: () {
-                          if (controller.loginFormKey.currentState!
-                              .validate()) {}
-                        },
+                        onPressed: controller.girisYap,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
