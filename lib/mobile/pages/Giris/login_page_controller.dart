@@ -16,19 +16,26 @@ class LoginPageController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    emailController.dispose();
-    passwordController.dispose();
+    emailController.clear();
+    passwordController.clear();
   }
 
   Future<void> girisYap() async {
-    if (loginFormKey.currentState!.validate()) {
-      final email = emailController.text;
-      final password = passwordController.text;
-      await auth.signInWithEmailAndPassword(email, password);
-      debugPrint("Giriş yapıldı");
-      auth.createProfile(name: global.name, gradeLevel: global.classLevel);
-      Get.offAndToNamed(MobileRoutes.ANASAYFA);
-      Get.snackbar("Giriş İşlemi Başarılı", "Hesap açma işlemi başarıyla gerçekleştirildi", duration: Durations.medium4);
+    try {
+      if (loginFormKey.currentState!.validate()) {
+        final email = emailController.text;
+        final password = passwordController.text;
+        await auth.signInWithEmailAndPassword(email, password);
+        debugPrint("Giriş yapıldı");
+        Get.offAndToNamed(MobileRoutes.ANASAYFA);
+        Get.snackbar(
+          "Giriş İşlemi Başarılı",
+          "Hesap açma işlemi başarıyla gerçekleştirildi",
+          duration: Duration(seconds: 3),
+        );
+      }
+    } catch (e) {
+      Get.snackbar("Hata", e.toString());
     }
   }
 }

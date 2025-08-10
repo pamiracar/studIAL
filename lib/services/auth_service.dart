@@ -33,14 +33,18 @@ class AuthService {
       throw Exception("Giriş yapılmamış. UID yok.");
     }
 
-    final response = await _supabase.from('profiles').insert({
-      'id': userId,
-      'name': name,
-      'class_level': gradeLevel,
-    });
+    final existingProfile = await _supabase
+        .from('profiles')
+        .select()
+        .eq('id', userId)
+        .maybeSingle();
 
-    if (response?.error != null) {
-      throw Exception('Profil oluşturulamadı: ${response.error!.message}');
+    if (existingProfile == null) {
+      await _supabase.from('profiles').insert({
+        'id': userId,
+        'name': name,
+        'class_level': gradeLevel,
+      });
     }
   }
 

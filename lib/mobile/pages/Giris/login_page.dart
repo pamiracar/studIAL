@@ -48,57 +48,54 @@ class LoginPage extends GetView<LoginPageController> {
                   key: controller.loginFormKey,
                   child: Column(
                     children: [
-                      GlassContainer(
-                        child: TextFormField(
-                          controller: controller.emailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'E-posta boş olamaz';
-                            }
-                            if (!RegExp(
-                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                            ).hasMatch(value)) {
-                              return 'Geçerli bir e-posta adresi girin';
-                            }
-                            return null;
-                          },
-
-                          decoration: InputDecoration(
-                            hint: const Text("E-posta"),
-                          ),
+                      TextFormField(
+                        controller: controller.emailController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'E-posta boş olamaz';
+                          }
+                          if (!RegExp(
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                          ).hasMatch(value)) {
+                            return 'Geçerli bir e-posta adresi girin';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hint: const Text("E-posta"),
                         ),
                       ),
                       SizedBox(height: 20),
-                      GlassContainer(
-                        child: Obx(() {
-                          return TextFormField(
-                            controller: controller.passwordController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Lütfen bu alanı doldurun!";
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              hint: const Text("Şifre"),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  controller.isPasswordShow.value =
-                                      !controller.isPasswordShow.value;
-                                },
-                                icon: Obx(
-                                  () => controller.isPasswordShow.value
-                                      ? Icon(Icons.visibility)
-                                      : Icon(Icons.visibility_off),
-                                ),
+                      Obx(() {
+                        return TextFormField(
+                          controller: controller.passwordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Lütfen bu alanı doldurun!";
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            hint: const Text("Şifre"),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                controller.isPasswordShow.value =
+                                    !controller.isPasswordShow.value;
+                              },
+                              icon: Obx(
+                                () => controller.isPasswordShow.value
+                                    ? Icon(Icons.visibility)
+                                    : Icon(Icons.visibility_off),
                               ),
                             ),
-                            obscureText: controller.isPasswordShow.value
-                                ? false
-                                : true,
-                          );
-                        }),
-                      ),
+                          ),
+                          obscureText: controller.isPasswordShow.value
+                              ? false
+                              : true,
+                        );
+                      }),
                       SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: controller.girisYap,

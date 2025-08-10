@@ -141,6 +141,57 @@ class StudialTheme {
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
 
+      // DropdownMenu teması
+      dropdownMenuTheme: DropdownMenuThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.7),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: glassBorder),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: glassBorder),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: primaryPurple, width: 2),
+          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        ),
+        menuStyle: MenuStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(0.95)),
+          elevation: MaterialStateProperty.all(8),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(color: glassBorder),
+            ),
+          ),
+          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 8)),
+        ),
+        textStyle: const TextStyle(
+          color: onSurfaceLight,
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+
+      // PopupMenuButton teması (DropdownButton için)
+      popupMenuTheme: PopupMenuThemeData(
+        color: Colors.white.withOpacity(0.95),
+        elevation: 8,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(color: glassBorder),
+        ),
+        textStyle: const TextStyle(
+          color: onSurfaceLight,
+          fontSize: 14,
+        ),
+      ),
+
       // Floating Action Button teması
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: primaryYellow,
@@ -287,6 +338,57 @@ class StudialTheme {
           borderSide: const BorderSide(color: lightPurple, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+
+      // DropdownMenu teması (Dark)
+      dropdownMenuTheme: DropdownMenuThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.1),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: Colors.white.withOpacity(0.2)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: lightPurple, width: 2),
+          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        ),
+        menuStyle: MenuStyle(
+          backgroundColor: MaterialStateProperty.all(surfaceDark.withOpacity(0.95)),
+          elevation: MaterialStateProperty.all(8),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(color: Colors.white.withOpacity(0.2)),
+            ),
+          ),
+          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 8)),
+        ),
+        textStyle: const TextStyle(
+          color: onSurfaceDark,
+          fontSize: 14,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+
+      // PopupMenuButton teması (DropdownButton için - Dark)
+      popupMenuTheme: PopupMenuThemeData(
+        color: surfaceDark.withOpacity(0.95),
+        elevation: 8,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(color: Colors.white.withOpacity(0.2)),
+        ),
+        textStyle: const TextStyle(
+          color: onSurfaceDark,
+          fontSize: 14,
+        ),
       ),
 
       // Floating Action Button teması
@@ -445,4 +547,168 @@ class GlassAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+// Glass efektli DropdownButton widget'ı
+class GlassDropdownButton<T> extends StatelessWidget {
+  final T? value;
+  final List<DropdownMenuItem<T>> items;
+  final ValueChanged<T?>? onChanged;
+  final String? hint;
+  final Widget? icon;
+  final double? width;
+  final EdgeInsetsGeometry? padding;
+  final bool isExpanded;
+
+  const GlassDropdownButton({
+    Key? key,
+    this.value,
+    required this.items,
+    this.onChanged,
+    this.hint,
+    this.icon,
+    this.width,
+    this.padding,
+    this.isExpanded = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return GlassContainer(
+      width: width,
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<T>(
+          value: value,
+          items: items,
+          onChanged: onChanged,
+          hint: hint != null
+            ? Text(
+                hint!,
+                style: TextStyle(
+                  color: isDark
+                    ? StudialTheme.onSurfaceDark.withOpacity(0.6)
+                    : StudialTheme.onSurfaceLight.withOpacity(0.6),
+                ),
+              )
+            : null,
+          icon: icon ?? Icon(
+            Icons.keyboard_arrow_down,
+            color: isDark
+              ? StudialTheme.onSurfaceDark
+              : StudialTheme.onSurfaceLight,
+          ),
+          isExpanded: isExpanded,
+          style: TextStyle(
+            color: isDark
+              ? StudialTheme.onSurfaceDark
+              : StudialTheme.onSurfaceLight,
+            fontSize: 14,
+          ),
+          dropdownColor: isDark
+            ? StudialTheme.surfaceDark.withOpacity(0.95)
+            : Colors.white.withOpacity(0.95),
+          borderRadius: BorderRadius.circular(12),
+          elevation: 8,
+        ),
+      ),
+    );
+  }
+}
+
+// Glass efektli DropdownButtonFormField widget'ı (Form validasyonu için)
+class GlassDropdownButtonFormField<T> extends StatelessWidget {
+  final T? value;
+  final List<DropdownMenuItem<T>> items;
+  final ValueChanged<T?>? onChanged;
+  final String? hint;
+  final String? label;
+  final FormFieldValidator<T>? validator;
+  final Widget? icon;
+  final double? width;
+  final EdgeInsetsGeometry? padding;
+  final bool isExpanded;
+
+  const GlassDropdownButtonFormField({
+    Key? key,
+    this.value,
+    required this.items,
+    this.onChanged,
+    this.hint,
+    this.label,
+    this.validator,
+    this.icon,
+    this.width,
+    this.padding,
+    this.isExpanded = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (label != null) ...[
+          Text(
+            label!,
+            style: TextStyle(
+              color: isDark
+                ? StudialTheme.onSurfaceDark
+                : StudialTheme.onSurfaceLight,
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 8),
+        ],
+        GlassContainer(
+          width: width,
+          padding: padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          child: DropdownButtonFormField<T>(
+            value: value,
+            items: items,
+            onChanged: onChanged,
+            validator: validator,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              errorBorder: InputBorder.none,
+              contentPadding: EdgeInsets.zero,
+            ),
+            hint: hint != null
+              ? Text(
+                  hint!,
+                  style: TextStyle(
+                    color: isDark
+                      ? StudialTheme.onSurfaceDark.withOpacity(0.6)
+                      : StudialTheme.onSurfaceLight.withOpacity(0.6),
+                  ),
+                )
+              : null,
+            icon: icon ?? Icon(
+              Icons.keyboard_arrow_down,
+              color: isDark
+                ? StudialTheme.onSurfaceDark
+                : StudialTheme.onSurfaceLight,
+            ),
+            isExpanded: isExpanded,
+            style: TextStyle(
+              color: isDark
+                ? StudialTheme.onSurfaceDark
+                : StudialTheme.onSurfaceLight,
+              fontSize: 14,
+            ),
+            dropdownColor: isDark
+              ? StudialTheme.surfaceDark.withOpacity(0.95)
+              : Colors.white.withOpacity(0.95),
+          ),
+        ),
+      ],
+    );
+  }
 }

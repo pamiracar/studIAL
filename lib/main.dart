@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:studial/AppRoutes.dart';
-import 'package:studial/mobile/pages/AnaSayfa/home_page.dart';
-import 'package:studial/mobile/pages/AnaSayfa/home_page_binding.dart';
+import 'package:studial/mobile/pages/AnaSayfa/profile_page.dart';
+import 'package:studial/mobile/pages/AnaSayfa/profile_page_binding.dart';
 import 'package:studial/mobile/pages/Giris/login_page.dart';
 import 'package:studial/mobile/pages/Giris/login_page_binding.dart';
 import 'package:studial/mobile/pages/HesapOlusturma/register_page.dart';
@@ -15,6 +15,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   await Supabase.initialize(url: "https://uzgblabjbfztgaszafeb.supabase.co", anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6Z2JsYWJqYmZ6dGdhc3phZmViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0NjI1MjAsImV4cCI6MjA3MDAzODUyMH0.Snouvz-2_w4vyYZpw2RWuPTPtJOC3l-UkDgikjvafxU");
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           darkTheme: StudialTheme.darkTheme,
           themeMode: ThemeMode.system,
           getPages: [
-            GetPage(name: MobileRoutes.ANASAYFA, page: () => HomePage(), binding: HomePageBinding()),
+            GetPage(name: MobileRoutes.ANASAYFA, page: () => ProfilePage(), binding: ProfilePageBinding()),
             GetPage(name: MobileRoutes.GIRIS, page: () => LoginPage(), binding: LoginPageBinding()),
             GetPage(name: MobileRoutes.OLUSTUR, page: () => RegisterPage(), binding: RegisterPageBinding()),
             GetPage(name: MobileRoutes.INITIAL, page: () => ResponsiveLayout()),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studial/mobile/pages/AnaSayfa/home_page.dart';
-import 'package:studial/mobile/pages/AnaSayfa/home_page_controller.dart';
+import 'package:studial/mobile/pages/AnaSayfa/profile_page.dart';
+import 'package:studial/mobile/pages/AnaSayfa/profile_page_controller.dart';
 import 'package:studial/mobile/pages/Giris/login_page.dart';
 import 'package:studial/mobile/pages/Giris/login_page_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,8 +21,8 @@ class AuthGateMobile extends StatelessWidget {
         final session = snapshot.hasData ? snapshot.data!.session : null;
 
         if (session != null) {
-          Get.put(HomePageController());
-          return HomePage();
+          Get.put(ProfilePageController());
+          return ProfilePage();
         } else {
           Get.put(LoginPageController());
           return LoginPage();
