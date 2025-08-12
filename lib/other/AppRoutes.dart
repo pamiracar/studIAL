@@ -1,6 +1,8 @@
 class MobileRoutes{
   static const INITIAL = "/responsive";
+  static const PROFIL = "/profile";
   static const ANASAYFA = "/home";
+  static const CHAT = "/chats";
   static const GIRIS = "/login";
   static const OLUSTUR = "/register";
 }

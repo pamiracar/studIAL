@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studial/mobile/pages/AnaSayfa/profile_page_controller.dart';
+import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:studial/services/auth_service.dart';
-import 'package:studial/theme.dart';
 
 class ProfilePage extends GetView<ProfilePageController> {
   const ProfilePage({super.key});
@@ -11,7 +10,7 @@ class ProfilePage extends GetView<ProfilePageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Anasayfa"),
+        title: const Text("Profil"),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
@@ -25,7 +24,6 @@ class ProfilePage extends GetView<ProfilePageController> {
         if (controller.isLoading.value) {
           return Center(child: CircularProgressIndicator());
         }
-
         // Hata durumu
         if (controller.error.value != null) {
           return Center(
@@ -55,26 +53,26 @@ class ProfilePage extends GetView<ProfilePageController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GlassContainer(
+              Card(
                 child: ListTile(
                   leading: Icon(Icons.email),
                   title: Text('E-posta'),
                   subtitle: Text(controller.userMail ?? 'Email yok'),
                 ),
               ),
-              SizedBox(height: 8),
-              GlassContainer(
+              SizedBox(height: 3),
+              Card(
                 child: ListTile(
                   leading: Icon(Icons.person),
                   title: Text('Kullanıcı Adı'),
                   subtitle: Text(controller.displayName),
                 ),
               ),
-              SizedBox(height: 8),
+              SizedBox(height: 3),
               Row(
                 children: [
                   Expanded(
-                    child: GlassContainer(
+                    child: Card(
                       child: ListTile(
                         leading: Icon(Icons.calendar_today),
                         title: Text('Kayıt Tarihi'),
@@ -82,9 +80,9 @@ class ProfilePage extends GetView<ProfilePageController> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 3),
                   Expanded(
-                    child: GlassContainer(
+                    child: Card(
                       child: ListTile(
                         leading: Icon(Icons.school),
                         title: Text('Sınıf Seviyesi'),
@@ -108,7 +106,7 @@ class ProfilePage extends GetView<ProfilePageController> {
                     children: [
                       SizedBox(
                         width: 300,
-                        child: GlassContainer(
+                        child: Card(
                           child: ListTile(
                             leading: Icon(Icons.menu_book_rounded),
                             title: Text('İlan'),
@@ -116,10 +114,10 @@ class ProfilePage extends GetView<ProfilePageController> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 15),
+                      SizedBox(width: 10),
                       SizedBox(
                         width: 300,
-                        child: GlassContainer(
+                        child: Card(
                           child: ListTile(
                             leading: Icon(Icons.menu_book_rounded),
                             title: Text('İlan'),
@@ -127,10 +125,10 @@ class ProfilePage extends GetView<ProfilePageController> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 15),
+                      SizedBox(width: 10),
                       SizedBox(
                         width: 300,
-                        child: GlassContainer(
+                        child: Card(
                           child: ListTile(
                             leading: Icon(Icons.menu_book_rounded),
                             title: Text('İlan'),
@@ -138,10 +136,10 @@ class ProfilePage extends GetView<ProfilePageController> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 15),
+                      SizedBox(width: 10),
                       SizedBox(
                         width: 300,
-                        child: GlassContainer(
+                        child: Card(
                           child: ListTile(
                             leading: Icon(Icons.menu_book_rounded),
                             title: Text('İlan'),

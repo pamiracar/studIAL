@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:lottie/lottie.dart';
-import 'package:studial/AppRoutes.dart';
+import 'package:studial/other/AppRoutes.dart';
 import 'package:studial/mobile/pages/Giris/login_page_controller.dart';
-import 'package:studial/theme.dart';
+
 
 class LoginPage extends GetView<LoginPageController> {
   const LoginPage({super.key});

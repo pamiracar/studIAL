@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studial/global.dart';
 import 'package:studial/services/auth_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -22,7 +21,6 @@ class RegisterPageController extends GetxController {
     '12.Sınıf',
   ];
   final auth = AuthService();
-  final global = Get.put(Global(), permanent: true);
 
   late final String email;
   late final String password;

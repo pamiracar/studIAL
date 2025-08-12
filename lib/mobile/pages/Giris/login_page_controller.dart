@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:studial/AppRoutes.dart';
-import 'package:studial/global.dart';
+import 'package:studial/other/AppRoutes.dart';
 import 'package:studial/services/auth_service.dart';
 
 class LoginPageController extends GetxController {
@@ -11,7 +10,6 @@ class LoginPageController extends GetxController {
   final loginFormKey = GlobalKey<FormState>();
   RxBool isPasswordShow = false.obs;
   final auth = AuthService();
-  final global = Get.put(Global(), permanent: true);
 
   @override
   void onClose() {

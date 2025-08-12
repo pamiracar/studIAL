@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:studial/mobile/pages/HesapOlusturma/register_page_controller.dart';
-import 'package:studial/theme.dart';
 
 class RegisterPage extends GetView<RegisterPageController> {
   const RegisterPage({super.key});
@@ -116,8 +115,7 @@ class RegisterPage extends GetView<RegisterPageController> {
                               ).hasMatch(value)) {
                                 return 'Şifre en az 8 karakter olmalı, büyük harf, küçük harf,\nbir rakam ve bir özel karakter içermeli.';
                               }
-                              if (value !=
-                                  controller.passwordController.text) {
+                              if (value != controller.passwordController.text) {
                                 return "Lütfen şifrenizi doğru yazın";
                               }
                               return null;
@@ -164,27 +162,34 @@ class RegisterPage extends GetView<RegisterPageController> {
                             Expanded(
                               flex: 1, // 50% genişlik
                               child: Obx(() {
-                                return GlassDropdownButton<String>(
-                                  value: controller.selectedSinif.value,
-                                  icon: Icon(Icons.arrow_drop_down),
-                                  isExpanded: true,
-                                  onChanged: (String? newValue) {
-                                    controller.selectedSinif.value = newValue
-                                        .toString();
-                                    debugPrint(
-                                      controller.selectedSinif.value,
-                                    );
-                                  },
-                                  items: controller.sinifListesi
-                                      .map<DropdownMenuItem<String>>((
-                                        String value,
-                                      ) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      })
-                                      .toList(),
+                                return Card(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                    child: DropdownMenu<String>(
+                                      initialSelection:
+                                          controller.selectedSinif.value,
+                                      expandedInsets:
+                                          EdgeInsets.zero, // Tam genişlik için
+                                      onSelected: (String? newValue) {
+                                        if (newValue != null) {
+                                          controller.selectedSinif.value = newValue;
+                                          debugPrint(
+                                            controller.selectedSinif.value,
+                                          );
+                                        }
+                                      },
+                                      dropdownMenuEntries: controller.sinifListesi
+                                          .map<DropdownMenuEntry<String>>((
+                                            String value,
+                                          ) {
+                                            return DropdownMenuEntry<String>(
+                                              value: value,
+                                              label: value,
+                                            );
+                                          })
+                                          .toList(),
+                                    ),
+                                  ),
                                 );
                               }),
                             ),

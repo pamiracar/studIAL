@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:studial/mobile/pages/AnaSayfa/profile_page.dart';
-import 'package:studial/mobile/pages/AnaSayfa/profile_page_controller.dart';
+import 'package:studial/mobile/pages/Anasayfa/anasayfa.dart';
+import 'package:studial/mobile/pages/Anasayfa/anasayfa_binding.dart';
+import 'package:studial/mobile/pages/Anasayfa/anasayfa_controller.dart';
+import 'package:studial/mobile/pages/Profil/profile_page.dart';
+import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:studial/mobile/pages/Giris/login_page.dart';
 import 'package:studial/mobile/pages/Giris/login_page_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,8 +24,8 @@ class AuthGateMobile extends StatelessWidget {
         final session = snapshot.hasData ? snapshot.data!.session : null;
 
         if (session != null) {
-          Get.put(ProfilePageController());
-          return ProfilePage();
+          Get.put(AnasayfaController());
+          return HomePage();
         } else {
           Get.put(LoginPageController());
           return LoginPage();

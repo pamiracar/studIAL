@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:studial/AppRoutes.dart';
-import 'package:studial/mobile/pages/AnaSayfa/profile_page.dart';
-import 'package:studial/mobile/pages/AnaSayfa/profile_page_binding.dart';
+import 'package:studial/mobile/pages/Anasayfa/anasayfa.dart';
+import 'package:studial/mobile/pages/Anasayfa/anasayfa_binding.dart';
+import 'package:studial/mobile/pages/Mesajlar/mesajlar.dart';
+import 'package:studial/mobile/pages/Mesajlar/mesajlar_binding.dart';
+import 'package:studial/other/AppRoutes.dart';
+import 'package:studial/mobile/pages/Profil/profile_page.dart';
+import 'package:studial/mobile/pages/Profil/profile_page_binding.dart';
 import 'package:studial/mobile/pages/Giris/login_page.dart';
 import 'package:studial/mobile/pages/Giris/login_page_binding.dart';
 import 'package:studial/mobile/pages/HesapOlusturma/register_page.dart';
 import 'package:studial/mobile/pages/HesapOlusturma/register_page_binding.dart';
-import 'package:studial/responsive.dart';
-import 'package:studial/theme.dart';
+import 'package:studial/other/responsive.dart';
+import 'package:studial/other/theme.dart';
 import 'package:studial/web/pages/HomeWeb/home_web_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -30,11 +34,13 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'studIAL',
           initialRoute: MobileRoutes.INITIAL,
-          theme: StudialTheme.lightTheme,
-          darkTheme: StudialTheme.darkTheme,
+          theme: AppThemes.lightTheme,
+          darkTheme: AppThemes.darkTheme,
           themeMode: ThemeMode.system,
           getPages: [
-            GetPage(name: MobileRoutes.ANASAYFA, page: () => ProfilePage(), binding: ProfilePageBinding()),
+            GetPage(name: MobileRoutes.CHAT, page:() => ChatPage(), binding: ChatPageBinding()),
+            GetPage(name: MobileRoutes.ANASAYFA, page:() => HomePage(), binding: AnasayfaBinding()),
+            GetPage(name: MobileRoutes.PROFIL, page: () => ProfilePage(), binding: ProfilePageBinding()),
             GetPage(name: MobileRoutes.GIRIS, page: () => LoginPage(), binding: LoginPageBinding()),
             GetPage(name: MobileRoutes.OLUSTUR, page: () => RegisterPage(), binding: RegisterPageBinding()),
             GetPage(name: MobileRoutes.INITIAL, page: () => ResponsiveLayout()),

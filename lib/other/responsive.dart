@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studial/auth_gate.dart';
+import 'package:studial/other/auth_gate.dart';
 import 'package:studial/web/pages/HomeWeb/home_web_page.dart';
 
 class ResponsiveLayout extends StatefulWidget {
