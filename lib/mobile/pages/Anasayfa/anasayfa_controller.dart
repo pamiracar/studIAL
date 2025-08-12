@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
-import 'package:studial/services/auth_service.dart';
 
 class AnasayfaController extends GetxController{
   void refreshButton(){
-    AuthService().signOut();
   }
 
   void moreVerIcon(){
@@ -24,7 +22,7 @@ class AnasayfaController extends GetxController{
     "Tarih",
     "İngilizce - Yabancı Dil",
     "Almanca - Yabancı Dil",
-    "Fransızca - Yabancı Dil"
+    "Fransızca - Yabancı Dil",
     "Felsefe",
     "Din Kültürü ve Ahlak Bilgisi"
   ];
