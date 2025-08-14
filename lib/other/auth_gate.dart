@@ -23,6 +23,7 @@ class AuthGateMobile extends StatelessWidget {
 
         if (session != null) {
           Get.put(AnasayfaController());
+          Get.put(ProfilePageController());
           return HomePage();
         } else {
           Get.put(LoginPageController());

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AnasayfaController extends GetxController {
@@ -21,6 +20,15 @@ class AnasayfaController extends GetxController {
     "Felsefe",
     "Din Kültürü ve Ahlak Bilgisi",
   ];
+  var selectedSinif = 'Tümü'.obs;
+  List<String> sinifListesi = [
+    'Tümü',
+    '9. Sınıf',
+    '10. Sınıf',
+    '11. Sınıf',
+    '12. Sınıf',
+  ];
+  final RxString ilanSayisi = "1".obs;
   final RxString verilecekDers = "Matematik".obs;
   final RxString alinacakDers = "Coğrafya".obs;
   final String yayinlanmaTarihi = DateFormat(
@@ -30,6 +38,7 @@ class AnasayfaController extends GetxController {
   void refreshButton() {}
 
   void moreVerIcon() {}
+
   final supabase = Supabase.instance.client;
 
   var userName = Rxn<String>();
@@ -37,6 +46,12 @@ class AnasayfaController extends GetxController {
   var createdAt = Rxn<DateTime>();
   var isLoading = false.obs;
   var error = Rxn<String>();
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchProfile();
+  }
 
   Future<void> fetchProfile() async {
     try {
@@ -91,12 +106,30 @@ class AnasayfaController extends GetxController {
     }
   }
 
+  // Manuel yenileme için
+  Future<void> refreshProfile() async {
+    await fetchProfile();
+  }
+
+  // Getter'lar - UI'da kullanmak için
   String get displayName => userName.value ?? "İsim yok";
   String get displayClass => userClass.value ?? "Sınıf yok";
+  String get displayCreatedAt {
+    if (createdAt.value == null) return "Tarih yok";
 
-  @override
-  void onInit() {
-    super.onInit();
-    fetchProfile();
+    final date = createdAt.value!;
+    return "${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}";
   }
+
+  // Alternatif olarak tam tarih-saat gösterimi
+  String get displayCreatedAtFull {
+    if (createdAt.value == null) return "Tarih yok";
+
+    final date = createdAt.value!;
+    return "${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}";
+  }
+
+  // User bilgileri
+  String? get userId => supabase.auth.currentUser?.id;
+  String? get userMail => supabase.auth.currentUser?.email;
 }

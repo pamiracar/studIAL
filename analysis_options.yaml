@@ -1,5 +1,6 @@
 include: package:flutter_lints/flutter.yaml
 analyzer:
   errors:
+    avoid_print: ignore
     camel_case_types: ignore
     deprecated_member_use: ignore
