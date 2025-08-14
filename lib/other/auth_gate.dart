@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa.dart';
-import 'package:studial/mobile/pages/Anasayfa/anasayfa_binding.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_controller.dart';
-import 'package:studial/mobile/pages/Profil/profile_page.dart';
-import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:studial/mobile/pages/Giris/login_page.dart';
 import 'package:studial/mobile/pages/Giris/login_page_controller.dart';
+import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthGateMobile extends StatelessWidget {

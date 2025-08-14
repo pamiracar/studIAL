@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
+import 'package:studial/mobile/widgets/neon_container.dart';
 import 'package:studial/services/auth_service.dart';
 
 class ProfilePage extends GetView<ProfilePageController> {
@@ -10,7 +11,7 @@ class ProfilePage extends GetView<ProfilePageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profil"),
+        title: const Text("Profil", style: TextStyle(letterSpacing: 1),),
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
@@ -53,26 +54,26 @@ class ProfilePage extends GetView<ProfilePageController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Card(
+              NeonContainer(
                 child: ListTile(
                   leading: Icon(Icons.email),
                   title: Text('E-posta'),
                   subtitle: Text(controller.userMail ?? 'Email yok'),
                 ),
               ),
-              SizedBox(height: 3),
-              Card(
+              SizedBox(height: 13),
+              NeonContainer(
                 child: ListTile(
                   leading: Icon(Icons.person),
                   title: Text('Kullanıcı Adı'),
                   subtitle: Text(controller.displayName),
                 ),
               ),
-              SizedBox(height: 3),
+              SizedBox(height: 13),
               Row(
                 children: [
                   Expanded(
-                    child: Card(
+                    child: NeonContainer(
                       child: ListTile(
                         leading: Icon(Icons.calendar_today),
                         title: Text('Kayıt Tarihi'),
@@ -80,9 +81,9 @@ class ProfilePage extends GetView<ProfilePageController> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 3),
+                  SizedBox(width: 13),
                   Expanded(
-                    child: Card(
+                    child: NeonContainer(
                       child: ListTile(
                         leading: Icon(Icons.school),
                         title: Text('Sınıf Seviyesi'),
@@ -97,57 +98,59 @@ class ProfilePage extends GetView<ProfilePageController> {
                 title: Text("İlanlarım"),
                 trailing: Icon(Icons.add_rounded),
               ),
-              SizedBox(
-                height: 90,
+              NeonContainer(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 300,
-                        child: Card(
-                          child: ListTile(
-                            leading: Icon(Icons.menu_book_rounded),
-                            title: Text('İlan'),
-                            subtitle: Text("Örnek Küçük"),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          width: 300,
+                          child: Card(
+                            child: ListTile(
+                              leading: Icon(Icons.menu_book_rounded),
+                              title: Text('İlan'),
+                              subtitle: Text("Örnek Küçük"),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      SizedBox(
-                        width: 300,
-                        child: Card(
-                          child: ListTile(
-                            leading: Icon(Icons.menu_book_rounded),
-                            title: Text('İlan'),
-                            subtitle: Text("Örnek Küçük"),
+                        SizedBox(width: 10),
+                        SizedBox(
+                          width: 300,
+                          child: Card(
+                            child: ListTile(
+                              leading: Icon(Icons.menu_book_rounded),
+                              title: Text('İlan'),
+                              subtitle: Text("Örnek Küçük"),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      SizedBox(
-                        width: 300,
-                        child: Card(
-                          child: ListTile(
-                            leading: Icon(Icons.menu_book_rounded),
-                            title: Text('İlan'),
-                            subtitle: Text("Örnek Küçük"),
+                        SizedBox(width: 10),
+                        SizedBox(
+                          width: 300,
+                          child: Card(
+                            child: ListTile(
+                              leading: Icon(Icons.menu_book_rounded),
+                              title: Text('İlan'),
+                              subtitle: Text("Örnek Küçük"),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(width: 10),
-                      SizedBox(
-                        width: 300,
-                        child: Card(
-                          child: ListTile(
-                            leading: Icon(Icons.menu_book_rounded),
-                            title: Text('İlan'),
-                            subtitle: Text("Örnek Küçük"),
+                        SizedBox(width: 10),
+                        SizedBox(
+                          width: 300,
+                          child: Card(
+                            child: ListTile(
+                              leading: Icon(Icons.menu_book_rounded),
+                              title: Text('İlan'),
+                              subtitle: Text("Örnek Küçük"),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
