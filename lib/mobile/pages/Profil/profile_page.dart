@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:studial/mobile/widgets/appBar_page_name.dart';
 import 'package:studial/mobile/widgets/neon_container.dart';
+import 'package:studial/mobile/widgets/page_baslik.dart';
 import 'package:studial/services/auth_service.dart';
 
 class ProfilePage extends GetView<ProfilePageController> {
@@ -120,7 +121,7 @@ class ProfilePage extends GetView<ProfilePageController> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    controller.error.value!,
+                    "Lütfen internet bağlantınızı kontrol edip tekrar deneyin!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: colorScheme.onSurfaceVariant,
@@ -166,87 +167,12 @@ class ProfilePage extends GetView<ProfilePageController> {
           strokeWidth: 3,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
-
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profil başlık bölümü
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: isDark
-                          ? [
-                              colorScheme.primaryContainer.withOpacity(0.3),
-                              colorScheme.secondaryContainer.withOpacity(0.2),
-                            ]
-                          : [
-                              colorScheme.primaryContainer.withOpacity(0.1),
-                              colorScheme.secondaryContainer.withOpacity(0.05),
-                            ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(
-                      color: colorScheme.primary.withOpacity(
-                        isDark ? 0.3 : 0.1,
-                      ),
-                      width: 1,
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary.withOpacity(
-                                isDark ? 0.2 : 0.1,
-                              ),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Icon(
-                              Icons.person_rounded,
-                              color: colorScheme.primary,
-                              size: 32,
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  controller.displayName,
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: colorScheme.onSurface,
-                                    height: 1.2,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Profil Bilgileri',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: colorScheme.onSurfaceVariant,
-                                    height: 1.3,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                PageBaslik(title: controller.displayName, text: "Profil Bilgileri"),
 
                 const SizedBox(height: 28),
 
