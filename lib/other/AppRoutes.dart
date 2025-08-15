@@ -5,6 +5,7 @@ class MobileRoutes{
   static const CHAT = "/chats";
   static const GIRIS = "/login";
   static const OLUSTUR = "/register";
+  static const ILAN = "/olustur";
 }
 
 class WebRoutes{

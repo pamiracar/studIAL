@@ -451,6 +451,22 @@ class HomePage extends GetView<AnasayfaController> {
           ),
         );
       }),
+      floatingActionButton: FloatingActionButton(
+        onPressed:() {
+          Get.toNamed(MobileRoutes.ILAN);
+        },
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        elevation: isDark ? 8 : 6,
+        highlightElevation: isDark ? 12 : 8,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Icon(
+          Icons.add_rounded,
+          size: 22,
+        ),
+      ),
     );
   }
 }

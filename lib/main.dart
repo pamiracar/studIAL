@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:studial/mobile/pages/%C4%B0lanEkleme/ilan_binding.dart';
+import 'package:studial/mobile/pages/%C4%B0lanEkleme/ilan_ekleme.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_binding.dart';
 import 'package:studial/mobile/pages/Mesajlar/mesajlar.dart';
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
             GetPage(name: MobileRoutes.ANASAYFA, page:() => HomePage(), binding: AnasayfaBinding()),
             GetPage(name: MobileRoutes.PROFIL, page: () => ProfilePage(), binding: ProfilePageBinding()),
             GetPage(name: MobileRoutes.GIRIS, page: () => LoginPage(), binding: LoginPageBinding()),
+            GetPage(name: MobileRoutes.ILAN, page:() => AddIlanPage(), binding: IlanBinding()),
             GetPage(name: MobileRoutes.OLUSTUR, page: () => RegisterPage(), binding: RegisterPageBinding()),
             GetPage(name: MobileRoutes.INITIAL, page: () => ResponsiveLayout()),
             GetPage(name: WebRoutes.HOME_W, page: () => HomeWebPage()),

@@ -220,7 +220,7 @@ class IlanCard extends GetView<AnasayfaController> {
                       child: Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               color: secondaryColor.withOpacity(isDark ? 0.3 : 0.2),
                               borderRadius: BorderRadius.circular(8),
@@ -248,7 +248,7 @@ class IlanCard extends GetView<AnasayfaController> {
                                 Text(
                                   sinif,
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.bold,
                                     color: onSurfaceColor,
                                   ),

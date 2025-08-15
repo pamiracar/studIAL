@@ -135,7 +135,7 @@ class ChatPage extends GetView<ChatPageController> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    controller.error.value!,
+                    "Lütfen internet bağlantınızı kontrol edip tekrar deneyin!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: colorScheme.onSurfaceVariant,
