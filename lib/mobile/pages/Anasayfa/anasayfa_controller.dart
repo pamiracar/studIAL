@@ -53,6 +53,16 @@ class AnasayfaController extends GetxController {
     fetchProfile();
   }
 
+  Future<void> fetchAdverts() async {
+    try {
+      isLoading.value = true;
+      error.value = null;
+      final user = supabase.auth.currentUser;
+    } catch (e) {
+
+    }
+  }
+
   Future<void> fetchProfile() async {
     try {
       isLoading.value = true;

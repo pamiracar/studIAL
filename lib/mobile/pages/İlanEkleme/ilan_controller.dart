@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:studial/models/ilan.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class IlanController extends GetxController {
@@ -135,7 +138,6 @@ class IlanController extends GetxController {
     'Beden Eğitimi',
   ];
 
-
   @override
   void onClose() {
     aciklamaController.dispose();
@@ -231,14 +233,44 @@ class IlanController extends GetxController {
 
     isLoading.value = true;
 
-
-
-      // Formu temizle
-      _clearForm();
-
-      // Geri dön
+    try {
+      final Ilan yeniIlan = Ilan(
+        userId: supabase.auth.currentUser!.id,
+        yayinlanmaTarihi: yayinlanmaTarihi,
+        verilecekDers: selectedVerilecekDers.value,
+        alinacakDers: selectedAlinacakDers.value,
+      );
+      await supabase.from('adverts').insert({
+        'id': yeniIlan.userId,
+        'yayinlanmaTarihi': yeniIlan.yayinlanmaTarihi,
+        'verilecekDers': yeniIlan.verilecekDers,
+        'alinacakDers': yeniIlan.alinacakDers,
+      });
+      Get.snackbar(
+        'Başarılı',
+        'İlanınız başarıyla paylaşıldı',
+        snackPosition: SnackPosition.TOP,
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.all(16),
+        borderRadius: 12,
+        icon: const Icon(Icons.error_rounded, color: Colors.white),
+      );
+    } catch (e) {
+      Get.snackbar(
+        'Hata',
+        'İlan paylaşılırken bir sorun oluştu',
+        snackPosition: SnackPosition.TOP,
+        duration: const Duration(seconds: 2),
+        margin: const EdgeInsets.all(16),
+        borderRadius: 12,
+        icon: const Icon(Icons.error_rounded, color: Colors.white),
+      );
+      debugPrint("İlan paylaşılırken hata: $e ");
+    } finally {
       Get.back();
+      _clearForm();
       isLoading.value = false;
+    }
   }
 
   // Formu temizle
