@@ -172,8 +172,6 @@ class IlanController extends GetxController {
       Get.snackbar(
         'Uyarı',
         'Aynı dersi hem veremez hem de alamazsınız!',
-        backgroundColor: Colors.orange.withOpacity(0.9),
-        colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.all(16),
@@ -222,8 +220,6 @@ class IlanController extends GetxController {
       Get.snackbar(
         'Hata',
         'Lütfen gerekli alanları doldurunuz',
-        backgroundColor: Colors.red.withOpacity(0.9),
-        colorText: Colors.white,
         snackPosition: SnackPosition.TOP,
         duration: const Duration(seconds: 2),
         margin: const EdgeInsets.all(16),
@@ -235,58 +231,14 @@ class IlanController extends GetxController {
 
     isLoading.value = true;
 
-    try {
-      // API çağrısı simülasyonu
-      await Future.delayed(const Duration(seconds: 2));
 
-      // İlan verilerini hazırla
-      final ilanData = {
-        'verilecek_ders': selectedVerilecekDers.value,
-        'alinacak_ders': selectedAlinacakDers.value,
-        'aciklama': aciklamaController.text.trim(),
-        'created_at': DateTime.now().toIso8601String(),
-      };
-
-      print('İlan oluşturuluyor: $ilanData');
-
-      // Başarılı mesajı
-      Get.snackbar(
-        'Başarılı',
-        'İlanınız başarıyla oluşturuldu!',
-        backgroundColor: Colors.green.withOpacity(0.9),
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.all(16),
-        borderRadius: 12,
-        icon: const Icon(Icons.check_circle_rounded, color: Colors.white),
-      );
 
       // Formu temizle
       _clearForm();
 
       // Geri dön
       Get.back();
-
-      // Burada API çağrısı yapılacak
-      // await ilanService.createIlan(ilanData);
-
-    } catch (e) {
-      // Hata mesajı
-      Get.snackbar(
-        'Hata',
-        'İlan oluşturulurken bir hata oluştu: ${e.toString()}',
-        backgroundColor: Colors.red.withOpacity(0.9),
-        colorText: Colors.white,
-        snackPosition: SnackPosition.TOP,
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.all(16),
-        borderRadius: 12,
-        icon: const Icon(Icons.error_rounded, color: Colors.white),
-      );
-    } finally {
       isLoading.value = false;
-    }
   }
 
   // Formu temizle

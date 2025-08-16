@@ -431,19 +431,18 @@ class HomePage extends GetView<AnasayfaController> {
                         yayinlanmaTarihi: controller.yayinlanmaTarihi,
                         vermekIstedigiDers: controller.verilecekDers.value,
                         karsilikDers: controller.alinacakDers.value,
-                        sinif: controller.displayClass,
+                        sinif: controller.displayClass, isIletisim: true,
                       ),
                       IlanCard(
                         isim: controller.displayName,
                         yayinlanmaTarihi: controller.yayinlanmaTarihi,
                         vermekIstedigiDers: controller.verilecekDers.value,
                         karsilikDers: controller.alinacakDers.value,
-                        sinif: controller.displayClass,
+                        sinif: controller.displayClass, isIletisim: true,
                       ),
                     ],
                   );
                 }),
-
                 // Bottom padding
                 const SizedBox(height: 100),
               ],

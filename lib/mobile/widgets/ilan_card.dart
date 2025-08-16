@@ -9,6 +9,7 @@ class IlanCard extends GetView<AnasayfaController> {
   final String vermekIstedigiDers;
   final String karsilikDers;
   final String sinif;
+  final bool isIletisim;
 
   const IlanCard({
     super.key,
@@ -17,6 +18,7 @@ class IlanCard extends GetView<AnasayfaController> {
     required this.vermekIstedigiDers,
     required this.karsilikDers,
     required this.sinif,
+    required this.isIletisim,
   });
 
   @override
@@ -38,9 +40,7 @@ class IlanCard extends GetView<AnasayfaController> {
       child: Card(
         elevation: isDark ? 4 : 2,
         shadowColor: colorScheme.shadow.withOpacity(0.1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         color: surfaceColor,
         child: Container(
           padding: const EdgeInsets.all(20),
@@ -90,7 +90,10 @@ class IlanCard extends GetView<AnasayfaController> {
                     ],
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.green.withOpacity(isDark ? 0.2 : 0.1),
                       borderRadius: BorderRadius.circular(12),
@@ -129,8 +132,8 @@ class IlanCard extends GetView<AnasayfaController> {
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: isDark
-                    ? colorScheme.primaryContainer.withOpacity(0.3)
-                    : colorScheme.primaryContainer.withOpacity(0.1),
+                      ? colorScheme.primaryContainer.withOpacity(0.3)
+                      : colorScheme.primaryContainer.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
                     color: primaryColor.withOpacity(isDark ? 0.3 : 0.2),
@@ -166,7 +169,9 @@ class IlanCard extends GetView<AnasayfaController> {
                           margin: const EdgeInsets.symmetric(horizontal: 12),
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.orange.withOpacity(isDark ? 0.2 : 0.1),
+                            color: Colors.orange.withOpacity(
+                              isDark ? 0.2 : 0.1,
+                            ),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Icon(
@@ -191,7 +196,9 @@ class IlanCard extends GetView<AnasayfaController> {
                       context: context,
                       icon: Icons.auto_stories_rounded,
                       iconColor: Colors.orange.shade600,
-                      iconBgColor: Colors.orange.withOpacity(isDark ? 0.2 : 0.1),
+                      iconBgColor: Colors.orange.withOpacity(
+                        isDark ? 0.2 : 0.1,
+                      ),
                       title: "Karşılığında almak istediği",
                       subtitle: karsilikDers,
                       subtitleColor: Colors.orange.shade600,
@@ -213,8 +220,8 @@ class IlanCard extends GetView<AnasayfaController> {
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
                         color: isDark
-                          ? colorScheme.secondaryContainer.withOpacity(0.3)
-                          : colorScheme.secondaryContainer.withOpacity(0.2),
+                            ? colorScheme.secondaryContainer.withOpacity(0.3)
+                            : colorScheme.secondaryContainer.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -222,12 +229,16 @@ class IlanCard extends GetView<AnasayfaController> {
                           Container(
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: secondaryColor.withOpacity(isDark ? 0.3 : 0.2),
+                              color: secondaryColor.withOpacity(
+                                isDark ? 0.3 : 0.2,
+                              ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
                               Icons.class_rounded,
-                              color: isDark ? colorScheme.onSecondaryContainer : secondaryColor,
+                              color: isDark
+                                  ? colorScheme.onSecondaryContainer
+                                  : secondaryColor,
                               size: 16,
                             ),
                           ),
@@ -264,34 +275,37 @@ class IlanCard extends GetView<AnasayfaController> {
                   const SizedBox(width: 12),
 
                   // İletişim butonu
-                  Expanded(
-                    flex: 3,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        // İletişim işlemi
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
-                        foregroundColor: colorScheme.onPrimary,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 14,
+                  if (isIletisim) ...[
+                    Expanded(
+                      flex: 3,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          // İletişim işlemi
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          foregroundColor: colorScheme.onPrimary,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 14,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: isDark ? 4 : 2,
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: isDark ? 4 : 2,
-                      ),
-                      icon: const Icon(Icons.chat_rounded, size: 16),
-                      label: const Text(
-                        'İletişim',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
+                        icon: const Icon(Icons.chat_rounded, size: 16),
+                        label: const Text(
+                          'İletişim',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ] else
+                  SizedBox(),
                 ],
               ),
             ],
@@ -321,11 +335,7 @@ class IlanCard extends GetView<AnasayfaController> {
             color: iconBgColor,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Icon(
-            icon,
-            color: iconColor,
-            size: 20,
-          ),
+          child: Icon(icon, color: iconColor, size: 20),
         ),
         const SizedBox(width: 14),
         Expanded(
