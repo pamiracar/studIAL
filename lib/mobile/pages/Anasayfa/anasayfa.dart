@@ -423,26 +423,15 @@ class HomePage extends GetView<AnasayfaController> {
                 ),
                 const SizedBox(height: 20),
 
-                Obx(() {
-                  return Column(
-                    children: [
-                      IlanCard(
-                        isim: controller.displayName,
-                        yayinlanmaTarihi: controller.yayinlanmaTarihi,
-                        vermekIstedigiDers: controller.verilecekDers.value,
-                        karsilikDers: controller.alinacakDers.value,
-                        sinif: controller.displayClass, isIletisim: true,
-                      ),
-                      IlanCard(
-                        isim: controller.displayName,
-                        yayinlanmaTarihi: controller.yayinlanmaTarihi,
-                        vermekIstedigiDers: controller.verilecekDers.value,
-                        karsilikDers: controller.alinacakDers.value,
-                        sinif: controller.displayClass, isIletisim: true,
-                      ),
-                    ],
-                  );
-                }),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.adverts.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final advert = controller.adverts[index];
+                      return IlanCard(isim: advert.userName, yayinlanmaTarihi: advert.yayinlanmaTarihi, vermekIstedigiDers: advert.alinacakDers, karsilikDers: advert.verilecekDers, sinif: advert.classLevel, isIletisim: true);
+                    },
+                ),
                 // Bottom padding
                 const SizedBox(height: 100),
               ],
@@ -452,7 +441,7 @@ class HomePage extends GetView<AnasayfaController> {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed:() {
-          Get.toNamed(MobileRoutes.ILAN);
+          Get.offAndToNamed(MobileRoutes.ILAN);
         },
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,

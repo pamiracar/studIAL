@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:studial/mobile/pages/%C4%B0lanEkleme/ilan_binding.dart';
 import 'package:studial/mobile/pages/%C4%B0lanEkleme/ilan_ekleme.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa.dart';
@@ -18,6 +19,8 @@ import 'package:studial/other/responsive.dart';
 import 'package:studial/other/theme.dart';
 import 'package:studial/web/pages/HomeWeb/home_web_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+var logger = Logger();
 
 void main() async {
   await Supabase.initialize(url: "https://uzgblabjbfztgaszafeb.supabase.co", anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6Z2JsYWJqYmZ6dGdhc3phZmViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0NjI1MjAsImV4cCI6MjA3MDAzODUyMH0.Snouvz-2_w4vyYZpw2RWuPTPtJOC3l-UkDgikjvafxU");

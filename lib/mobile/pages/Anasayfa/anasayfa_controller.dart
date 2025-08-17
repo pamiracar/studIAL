@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:studial/main.dart';
+import 'package:studial/models/ilan.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AnasayfaController extends GetxController {
@@ -28,7 +31,7 @@ class AnasayfaController extends GetxController {
     '11. Sınıf',
     '12. Sınıf',
   ];
-  final RxString ilanSayisi = "1".obs;
+  final RxInt ilanSayisi = 1.obs;
   final RxString verilecekDers = "Matematik".obs;
   final RxString alinacakDers = "Coğrafya".obs;
   final String yayinlanmaTarihi = DateFormat(
@@ -51,15 +54,32 @@ class AnasayfaController extends GetxController {
   void onInit() {
     super.onInit();
     fetchProfile();
+    fetchAdverts();
   }
+
+  List<Ilan> adverts = [];
 
   Future<void> fetchAdverts() async {
     try {
       isLoading.value = true;
       error.value = null;
       final user = supabase.auth.currentUser;
-    } catch (e) {
 
+      final response = await supabase.from("adverts").select();
+      adverts = (response as List)
+          .map((item) => Ilan.fromJson(item as Map<String, dynamic>))
+          .toList();
+      ilanSayisi.value = adverts.length;
+    }  on PostgrestException catch (e) {
+      error.value = "Veritabanı hatası: ${e.message}";
+      print("PostgreSQL Error: ${e.message}");
+      print("Error details: ${e.details}");
+      print("Error hint: ${e.hint}");
+    } catch (e) {
+      error.value = "Genel hata: $e";
+      print("General Error: $e");
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -119,6 +139,7 @@ class AnasayfaController extends GetxController {
   // Manuel yenileme için
   Future<void> refreshProfile() async {
     await fetchProfile();
+    fetchAdverts();
   }
 
   // Getter'lar - UI'da kullanmak için

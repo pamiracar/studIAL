@@ -1,9 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:studial/models/ilan.dart';
+import 'package:studial/main.dart';
+import 'package:studial/other/AppRoutes.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class IlanController extends GetxController {
@@ -121,21 +120,19 @@ class IlanController extends GetxController {
 
   // Ders listesi
   final List<String> dersler = [
-    'Matematik',
-    'Fizik',
-    'Kimya',
-    'Biyoloji',
-    'Türkçe',
-    'Edebiyat',
-    'Tarih',
-    'Coğrafya',
-    'İngilizce',
-    'Almanca',
-    'Felsefe',
-    'Geometri',
-    'Resim',
-    'Müzik',
-    'Beden Eğitimi',
+    "Türk Dili ve Edebiyatı",
+    "Matematik",
+    "Geometri",
+    "Fizik",
+    "Kimya",
+    "Biyoloji",
+    "Coğrafya",
+    "Tarih",
+    "İngilizce - Yabancı Dil",
+    "Almanca - Yabancı Dil",
+    "Fransızca - Yabancı Dil",
+    "Felsefe",
+    "Din Kültürü ve Ahlak Bilgisi",
   ];
 
   @override
@@ -222,10 +219,7 @@ class IlanController extends GetxController {
       Get.snackbar(
         'Hata',
         'Lütfen gerekli alanları doldurunuz',
-        snackPosition: SnackPosition.TOP,
         duration: const Duration(seconds: 2),
-        margin: const EdgeInsets.all(16),
-        borderRadius: 12,
         icon: const Icon(Icons.error_rounded, color: Colors.white),
       );
       return;
@@ -234,42 +228,34 @@ class IlanController extends GetxController {
     isLoading.value = true;
 
     try {
-      final Ilan yeniIlan = Ilan(
-        userId: supabase.auth.currentUser!.id,
-        yayinlanmaTarihi: yayinlanmaTarihi,
-        verilecekDers: selectedVerilecekDers.value,
-        alinacakDers: selectedAlinacakDers.value,
-      );
       await supabase.from('adverts').insert({
-        'id': yeniIlan.userId,
-        'yayinlanmaTarihi': yeniIlan.yayinlanmaTarihi,
-        'verilecekDers': yeniIlan.verilecekDers,
-        'alinacakDers': yeniIlan.alinacakDers,
+        'yayinlanma_tarihi': yayinlanmaTarihi,
+        'verilecek_ders': selectedVerilecekDers.value,
+        'alinacak_ders': selectedAlinacakDers.value,
+        'user_id': supabase.auth.currentUser!.id,
+        "user_name": displayName,
+        "class_level": displayClass,
       });
       Get.snackbar(
         'Başarılı',
         'İlanınız başarıyla paylaşıldı',
-        snackPosition: SnackPosition.TOP,
         duration: const Duration(seconds: 2),
-        margin: const EdgeInsets.all(16),
-        borderRadius: 12,
         icon: const Icon(Icons.error_rounded, color: Colors.white),
       );
+      logger.i("Başarılı");
+      Future.delayed(const Duration(seconds: 2), () {
+        _clearForm();
+        isLoading.value = false;
+        Get.offAndToNamed(MobileRoutes.ANASAYFA);
+      });
     } catch (e) {
       Get.snackbar(
         'Hata',
         'İlan paylaşılırken bir sorun oluştu',
-        snackPosition: SnackPosition.TOP,
         duration: const Duration(seconds: 2),
-        margin: const EdgeInsets.all(16),
-        borderRadius: 12,
         icon: const Icon(Icons.error_rounded, color: Colors.white),
       );
-      debugPrint("İlan paylaşılırken hata: $e ");
-    } finally {
-      Get.back();
-      _clearForm();
-      isLoading.value = false;
+      logger.e("İlan paylaşılırken hata: $e ");
     }
   }
 

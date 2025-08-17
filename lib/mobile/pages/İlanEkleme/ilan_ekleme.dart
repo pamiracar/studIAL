@@ -19,13 +19,6 @@ class AddIlanPage extends GetView<IlanController> {
         scrolledUnderElevation: 1,
         backgroundColor: colorScheme.surface,
         surfaceTintColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: colorScheme.onSurface,
-          ),
-        ),
         title: Text(
           'Yeni İlan',
           style: TextStyle(
