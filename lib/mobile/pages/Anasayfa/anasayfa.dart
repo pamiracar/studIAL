@@ -441,7 +441,9 @@ class HomePage extends GetView<AnasayfaController> {
       }),
       floatingActionButton: FloatingActionButton(
         onPressed:() {
-          Get.offAndToNamed(MobileRoutes.ILAN);
+          Get.toNamed(MobileRoutes.ILAN)?.then((value) {
+            controller.fetchAdverts();
+          },);
         },
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,

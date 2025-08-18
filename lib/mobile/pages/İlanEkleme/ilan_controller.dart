@@ -236,19 +236,23 @@ class IlanController extends GetxController {
         "user_name": displayName,
         "class_level": displayClass,
       });
+      logger.i("Başarılı");
+      _clearForm();
+      isLoading.value = false;
+      print("geri dönüyorum ${Get.routing.current}");
+      if (Get.routing.previous.isNotEmpty) {
+        Get.back(result: true);
+      } else {
+        Get.offAndToNamed(MobileRoutes.ANASAYFA);
+      }
       Get.snackbar(
         'Başarılı',
         'İlanınız başarıyla paylaşıldı',
         duration: const Duration(seconds: 2),
         icon: const Icon(Icons.error_rounded, color: Colors.white),
       );
-      logger.i("Başarılı");
-      Future.delayed(const Duration(seconds: 2), () {
-        _clearForm();
-        isLoading.value = false;
-        Get.offAndToNamed(MobileRoutes.ANASAYFA);
-      });
     } catch (e) {
+      isLoading.value = false;
       Get.snackbar(
         'Hata',
         'İlan paylaşılırken bir sorun oluştu',

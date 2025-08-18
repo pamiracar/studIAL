@@ -172,7 +172,10 @@ class ProfilePage extends GetView<ProfilePageController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profil başlık bölümü
-                PageBaslik(title: controller.displayName, text: "Profil Bilgileri"),
+                PageBaslik(
+                  title: controller.displayName,
+                  text: "Profil Bilgileri",
+                ),
 
                 const SizedBox(height: 28),
 
@@ -444,6 +447,7 @@ class ProfilePage extends GetView<ProfilePageController> {
                 // İlanlar listesi
                 Container(
                   width: double.infinity,
+                  height: 150,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
@@ -463,66 +467,65 @@ class ProfilePage extends GetView<ProfilePageController> {
                       ),
                     ],
                   ),
-                  child: SingleChildScrollView(
+                  child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(
-                        4,
-                        (index) => Container(
-                          width: 280,
-                          margin: EdgeInsets.only(left: 16, right: 4),
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: colorScheme.surfaceVariant.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: colorScheme.outline.withOpacity(0.1),
-                              width: 1,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: colorScheme.primary.withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Icon(
-                                  Icons.menu_book_rounded,
-                                  color: colorScheme.primary,
-                                  size: 16,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Ders İlanı ${index + 1}',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: colorScheme.onSurface,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Matematik - Fizik',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: colorScheme.onSurfaceVariant,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                    itemCount: controller.adverts.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final advert = controller.adverts[index];
+                      return Container(
+                        width: 280,
+                        margin: EdgeInsets.only(left: 16, right: 4),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: colorScheme.surfaceVariant.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: colorScheme.outline.withOpacity(0.1),
+                            width: 1,
                           ),
                         ),
-                      ),
-                    ),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: colorScheme.primary.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Icon(
+                                Icons.menu_book_rounded,
+                                color: colorScheme.primary,
+                                size: 16,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Ders İlanı ${index + 1}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorScheme.onSurface,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '${advert.verilecekDers} - ${advert.alinacakDers}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: colorScheme.onSurfaceVariant,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
 

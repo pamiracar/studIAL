@@ -70,7 +70,7 @@ class AnasayfaController extends GetxController {
           .map((item) => Ilan.fromJson(item as Map<String, dynamic>))
           .toList();
       ilanSayisi.value = adverts.length;
-    }  on PostgrestException catch (e) {
+    } on PostgrestException catch (e) {
       error.value = "Veritabanı hatası: ${e.message}";
       print("PostgreSQL Error: ${e.message}");
       print("Error details: ${e.details}");
