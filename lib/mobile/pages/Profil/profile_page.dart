@@ -4,6 +4,7 @@ import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:studial/mobile/widgets/appBar_page_name.dart';
 import 'package:studial/mobile/widgets/neon_container.dart';
 import 'package:studial/mobile/widgets/page_baslik.dart';
+import 'package:studial/other/AppRoutes.dart';
 import 'package:studial/services/auth_service.dart';
 
 class ProfilePage extends GetView<ProfilePageController> {
@@ -13,16 +14,23 @@ class ProfilePage extends GetView<ProfilePageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Theme.of(context).colorScheme.onSurfaceVariant
+          ),
+          onPressed: () => Get.offAndToNamed(MobileRoutes.ANASAYFA),
+        ),
         elevation: 0,
         scrolledUnderElevation: 1,
         backgroundColor: Theme.of(context).colorScheme.surface,
         surfaceTintColor: Colors.transparent,
-        title: Row(children: [AppbarPageName(name: "Profil")]),
+        title: AppbarPageName(name: "Profil"),
         centerTitle: false,
         actions: [
           IconButton(
             onPressed: AuthService().signOut,
-            icon: const Icon(Icons.logout),
+            icon: Icon(Icons.logout, color: Theme.of(context).colorScheme.onSurfaceVariant,),
           ),
         ],
       ),
@@ -428,7 +436,9 @@ class ProfilePage extends GetView<ProfilePageController> {
                       ),
                       child: IconButton(
                         onPressed: () {
-                          // İlan ekleme fonksiyonu
+                          Get.toNamed(MobileRoutes.ILAN)?.then((value) {
+                            controller.fetchAdverts();
+                          });
                         },
                         icon: Icon(
                           Icons.add_rounded,
@@ -447,7 +457,7 @@ class ProfilePage extends GetView<ProfilePageController> {
                 // İlanlar listesi
                 Container(
                   width: double.infinity,
-                  height: 150,
+                  height: 120,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
                     color: colorScheme.surface,

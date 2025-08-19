@@ -23,11 +23,7 @@ class HomePage extends GetView<AnasayfaController> {
         scrolledUnderElevation: 1,
         backgroundColor: colorScheme.surface,
         surfaceTintColor: Colors.transparent,
-        title: Row(
-          children: [
-            AppbarPageName(name: "StudIAL")
-          ],
-        ),
+        title: Row(children: [AppbarPageName(name: "StudIAL")]),
         centerTitle: false,
         actions: [
           Container(
@@ -60,9 +56,9 @@ class HomePage extends GetView<AnasayfaController> {
               ),
               onSelected: (value) {
                 if (value == 'profil') {
-                  Get.toNamed(MobileRoutes.PROFIL);
+                  Get.offAndToNamed(MobileRoutes.PROFIL);
                 } else if (value == 'mesajlar') {
-                  Get.toNamed(MobileRoutes.CHAT);
+                  Get.offAndToNamed(MobileRoutes.CHAT);
                 }
               },
               itemBuilder: (context) => [
@@ -408,11 +404,10 @@ class HomePage extends GetView<AnasayfaController> {
                           const SizedBox(width: 6),
                           Obx(() {
                             return Text(
-                             "${ controller.ilanSayisi.value} ilan",
+                              "${controller.ilanSayisi.value} ilan",
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
-
                               ),
                             );
                           }),
@@ -426,11 +421,29 @@ class HomePage extends GetView<AnasayfaController> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                    itemCount: controller.adverts.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final advert = controller.adverts[index];
-                      return IlanCard(isim: advert.userName, yayinlanmaTarihi: advert.yayinlanmaTarihi, vermekIstedigiDers: advert.alinacakDers, karsilikDers: advert.verilecekDers, sinif: advert.classLevel, isIletisim: true);
-                    },
+                  itemCount: controller.adverts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final advert = controller.adverts[index];
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IlanCard(
+                          isim: advert.userName,
+                          yayinlanmaTarihi: advert.yayinlanmaTarihi,
+                          vermekIstedigiDers: advert.alinacakDers,
+                          karsilikDers: advert.verilecekDers,
+                          sinif: advert.classLevel,
+                          isIletisim: true,
+                        ),
+                        Container(
+                          height: 1,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurfaceVariant.withOpacity(0.3),
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 // Bottom padding
                 const SizedBox(height: 100),
@@ -440,22 +453,17 @@ class HomePage extends GetView<AnasayfaController> {
         );
       }),
       floatingActionButton: FloatingActionButton(
-        onPressed:() {
+        onPressed: () {
           Get.toNamed(MobileRoutes.ILAN)?.then((value) {
             controller.fetchAdverts();
-          },);
+          });
         },
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,
         elevation: isDark ? 8 : 6,
         highlightElevation: isDark ? 12 : 8,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Icon(
-          Icons.add_rounded,
-          size: 22,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Icon(Icons.add_rounded, size: 22),
       ),
     );
   }

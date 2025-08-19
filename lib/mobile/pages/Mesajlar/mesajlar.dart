@@ -5,6 +5,7 @@ import 'package:studial/mobile/pages/Mesajlar/mesajlar_controller.dart';
 import 'package:studial/mobile/widgets/appBar_page_name.dart';
 import 'package:studial/mobile/widgets/message_items.dart';
 import 'package:studial/mobile/widgets/page_baslik.dart';
+import 'package:studial/other/AppRoutes.dart';
 
 class ChatPage extends GetView<ChatPageController> {
   const ChatPage({super.key});
@@ -20,6 +21,13 @@ class ChatPage extends GetView<ChatPageController> {
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 1,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: colorScheme.onSurfaceVariant,
+          ),
+          onPressed: () => Get.offAndToNamed(MobileRoutes.ANASAYFA),
+        ),
         backgroundColor: colorScheme.surface,
         surfaceTintColor: Colors.transparent,
         title: Row(children: [AppbarPageName(name: "Mesajlar")]),

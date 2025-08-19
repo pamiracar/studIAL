@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(430, 932),
+      designSize: Size(360, 780),
       builder: (context, child) {
         return GetMaterialApp(
           title: 'studIAL',

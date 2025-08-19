@@ -53,8 +53,8 @@ class AnasayfaController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchProfile();
     fetchAdverts();
+    fetchProfile();
   }
 
   List<Ilan> adverts = [];

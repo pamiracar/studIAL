@@ -13,6 +13,8 @@ class AppColors {
   // Dark theme yardımcı renkler
   static const Color darkBackground = Color(0xFF121212);
   static const Color darkSurface = Color(0xFF1E1E1E);
+
+
 }
 
 class AppThemes {
@@ -104,6 +106,7 @@ class AppThemes {
       backgroundColor: AppColors.secondary,
       foregroundColor: Colors.black,
     ),
+
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.darkSurface,

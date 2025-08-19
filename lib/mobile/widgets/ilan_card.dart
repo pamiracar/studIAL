@@ -36,15 +36,15 @@ class IlanCard extends GetView<AnasayfaController> {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 20),
       child: Card(
         elevation: isDark ? 4 : 2,
         shadowColor: colorScheme.shadow.withOpacity(0.1),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         color: surfaceColor,
         child: Container(
-          padding: const EdgeInsets.all(20),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header - Kullanıcı adı ve tarih
@@ -169,9 +169,7 @@ class IlanCard extends GetView<AnasayfaController> {
                           margin: const EdgeInsets.symmetric(horizontal: 12),
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.orange.withOpacity(
-                              isDark ? 0.2 : 0.1,
-                            ),
+                            color: Colors.orange.withOpacity(isDark ? 0.2 : 0.1),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Icon(
@@ -196,9 +194,7 @@ class IlanCard extends GetView<AnasayfaController> {
                       context: context,
                       icon: Icons.auto_stories_rounded,
                       iconColor: Colors.orange.shade600,
-                      iconBgColor: Colors.orange.withOpacity(
-                        isDark ? 0.2 : 0.1,
-                      ),
+                      iconBgColor: Colors.orange.withOpacity(isDark ? 0.2 : 0.1),
                       title: "Karşılığında almak istediği",
                       subtitle: karsilikDers,
                       subtitleColor: Colors.orange.shade600,
@@ -305,7 +301,7 @@ class IlanCard extends GetView<AnasayfaController> {
                       ),
                     ),
                   ] else
-                  SizedBox(),
+                    SizedBox(),
                 ],
               ),
             ],
