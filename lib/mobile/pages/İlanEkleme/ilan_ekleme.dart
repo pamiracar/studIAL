@@ -115,71 +115,47 @@ class AddIlanPage extends GetView<IlanController> {
                 ),
               ),
               const SizedBox(height: 8),
-              Obx(() => Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: controller.verilecekDersError.value.isNotEmpty
-                        ? Colors.red.withOpacity(0.5)
-                        : colorScheme.outline.withOpacity(0.3),
-                    width: 1,
+              Obx(() => DropdownButtonFormField<String>(
+                value: controller.selectedVerilecekDers.value.isEmpty
+                    ? null
+                    : controller.selectedVerilecekDers.value,
+                decoration: InputDecoration(
+                  hintText: 'Ders seçiniz',
+                  hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow.withOpacity(isDark ? 0.1 : 0.05),
-                      spreadRadius: 0,
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DropdownButtonFormField<String>(
-                    value: controller.selectedVerilecekDers.value.isEmpty
-                        ? null
-                        : controller.selectedVerilecekDers.value,
-                    decoration: InputDecoration(
-                      hintText: 'Ders seçiniz',
-                      hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 16,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.school_rounded,
-                        color: colorScheme.primary,
-                        size: 20,
-                      ),
-                      errorText: controller.verilecekDersError.value.isEmpty
-                          ? null
-                          : controller.verilecekDersError.value,
-                    ),
-                    dropdownColor: colorScheme.surface,
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                    items: controller.dersler.map((String ders) {
-                      return DropdownMenuItem<String>(
-                        value: ders,
-                        child: Text(
-                          ders,
-                          style: TextStyle(
-                            color: colorScheme.onSurface,
-                            fontSize: 16,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      controller.setVerilecekDers(newValue ?? '');
-                    },
+                  prefixIcon: Icon(
+                    Icons.school_rounded,
+                    color: colorScheme.primary,
+                    size: 20,
                   ),
+                  errorText: controller.verilecekDersError.value.isEmpty
+                      ? null
+                      : controller.verilecekDersError.value,
                 ),
+                dropdownColor: colorScheme.surface,
+                icon: Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                items: controller.dersler.map((String ders) {
+                  return DropdownMenuItem<String>(
+                    value: ders,
+                    child: Text(
+                      ders,
+                      style: TextStyle(
+                        color: colorScheme.onSurface,
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  controller.setVerilecekDers(newValue ?? '');
+                },
               )),
 
               const SizedBox(height: 20),
@@ -194,71 +170,47 @@ class AddIlanPage extends GetView<IlanController> {
                 ),
               ),
               const SizedBox(height: 8),
-              Obx(() => Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: controller.alinacakDersError.value.isNotEmpty
-                        ? Colors.red.withOpacity(0.5)
-                        : colorScheme.outline.withOpacity(0.3),
-                    width: 1,
+              Obx(() => DropdownButtonFormField<String>(
+                value: controller.selectedAlinacakDers.value.isEmpty
+                    ? null
+                    : controller.selectedAlinacakDers.value,
+                decoration: InputDecoration(
+                  hintText: 'Ders seçiniz',
+                  hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow.withOpacity(isDark ? 0.1 : 0.05),
-                      spreadRadius: 0,
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DropdownButtonFormField<String>(
-                    value: controller.selectedAlinacakDers.value.isEmpty
-                        ? null
-                        : controller.selectedAlinacakDers.value,
-                    decoration: InputDecoration(
-                      hintText: 'Ders seçiniz',
-                      hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 16,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.menu_book_rounded,
-                        color: colorScheme.secondary,
-                        size: 20,
-                      ),
-                      errorText: controller.alinacakDersError.value.isEmpty
-                          ? null
-                          : controller.alinacakDersError.value,
-                    ),
-                    dropdownColor: colorScheme.surface,
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                    items: controller.dersler.map((String ders) {
-                      return DropdownMenuItem<String>(
-                        value: ders,
-                        child: Text(
-                          ders,
-                          style: TextStyle(
-                            color: colorScheme.onSurface,
-                            fontSize: 16,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      controller.setAlinacakDers(newValue ?? '');
-                    },
+                  prefixIcon: Icon(
+                    Icons.menu_book_rounded,
+                    color: colorScheme.secondary,
+                    size: 20,
                   ),
+                  errorText: controller.alinacakDersError.value.isEmpty
+                      ? null
+                      : controller.alinacakDersError.value,
                 ),
+                dropdownColor: colorScheme.surface,
+                icon: Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                items: controller.dersler.map((String ders) {
+                  return DropdownMenuItem<String>(
+                    value: ders,
+                    child: Text(
+                      ders,
+                      style: TextStyle(
+                        color: colorScheme.onSurface,
+                        fontSize: 16,
+                      ),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  controller.setAlinacakDers(newValue ?? '');
+                },
               )),
 
               const SizedBox(height: 20),

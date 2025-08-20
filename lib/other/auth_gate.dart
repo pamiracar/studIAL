@@ -22,8 +22,8 @@ class AuthGateMobile extends StatelessWidget {
         final session = snapshot.hasData ? snapshot.data!.session : null;
 
         if (session != null) {
+          Get.put(ProfilePageController(), permanent: true);
           Get.put(AnasayfaController());
-          Get.put(ProfilePageController());
           return HomePage();
         } else {
           Get.put(LoginPageController());

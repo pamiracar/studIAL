@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:studial/mobile/widgets/appBar_page_name.dart';
-import 'package:studial/mobile/widgets/neon_container.dart';
 import 'package:studial/mobile/widgets/page_baslik.dart';
 import 'package:studial/other/AppRoutes.dart';
 import 'package:studial/services/auth_service.dart';
@@ -12,12 +11,26 @@ class ProfilePage extends GetView<ProfilePageController> {
 
   @override
   Widget build(BuildContext context) {
+    print('=== DEBUG START ===');
+    print(
+      'Controller registered: ${Get.isRegistered<ProfilePageController>()}',
+    );
+
+    try {
+      final testController = Get.find<ProfilePageController>();
+      print('Controller found: $testController');
+      print('Controller adverts length: ${testController.adverts.length}');
+    } catch (e) {
+      print('Controller find error: $e');
+    }
+    print('=== DEBUG END ===');
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: Theme.of(context).colorScheme.onSurfaceVariant
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           onPressed: () => Get.offAndToNamed(MobileRoutes.ANASAYFA),
         ),
@@ -30,7 +43,10 @@ class ProfilePage extends GetView<ProfilePageController> {
         actions: [
           IconButton(
             onPressed: AuthService().signOut,
-            icon: Icon(Icons.logout, color: Theme.of(context).colorScheme.onSurfaceVariant,),
+            icon: Icon(
+              Icons.logout,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),
@@ -417,13 +433,25 @@ class ProfilePage extends GetView<ProfilePageController> {
                           size: 20,
                         ),
                         const SizedBox(width: 8),
-                        Text(
-                          'İlanlarım',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onSurface,
-                          ),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'İlanlarım',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "İlanınızı silmek için basılı tutun",
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -482,57 +510,93 @@ class ProfilePage extends GetView<ProfilePageController> {
                     itemCount: controller.adverts.length,
                     itemBuilder: (BuildContext context, int index) {
                       final advert = controller.adverts[index];
-                      return Container(
-                        width: 280,
-                        margin: EdgeInsets.only(left: 16, right: 4),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: colorScheme.surfaceVariant.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: colorScheme.outline.withOpacity(0.1),
-                            width: 1,
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: colorScheme.primary.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Icon(
-                                Icons.menu_book_rounded,
-                                color: colorScheme.primary,
-                                size: 16,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Ders İlanı ${index + 1}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.onSurface,
+                      return GestureDetector(
+                        onLongPress: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text("İlan siliniyor!"),
+                                content: const Text(
+                                  "İlanınızı silmek istediğizden emin misiniz?",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed:() => Get.back(),
+                                    child: const Text(
+                                      "İptal",
+                                      style: TextStyle(color: Colors.blue),
                                     ),
                                   ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '${advert.verilecekDers} - ${advert.alinacakDers}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: colorScheme.onSurfaceVariant,
+                                  TextButton(
+                                    onPressed:() {
+                                      controller.deleteAdvert(advert.id);
+                                      Get.back();
+                                    },
+                                    child: const Text(
+                                      "Sil",
+                                      style: TextStyle(color: Colors.red),
                                     ),
                                   ),
                                 ],
-                              ),
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          width: 280,
+                          margin: EdgeInsets.only(left: 16, right: 4),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: colorScheme.background.withAlpha(100),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: colorScheme.outline.withOpacity(0.3),
+                              width: 1,
                             ),
-                          ],
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: colorScheme.primary.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(
+                                  Icons.menu_book_rounded,
+                                  color: colorScheme.primary,
+                                  size: 16,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Ders İlanı ${index + 1}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: colorScheme.onSurface,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      '${advert.verilecekDers} - ${advert.alinacakDers}',
+                                      style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 12,
+                                        color: colorScheme.onSurfaceVariant,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },

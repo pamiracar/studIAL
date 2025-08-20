@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:studial/models/ilan.dart';
+import 'package:studial/other/AppRoutes.dart';
+import 'package:studial/services/auth_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePageController extends GetxController {
@@ -18,9 +20,39 @@ class ProfilePageController extends GetxController {
     fetchAdverts();
   }
 
+  Future<void> deleteAdvert(String advertId) async {
+    try {
+      isLoading.value = true;
+      error.value = null;
+
+      final response = await supabase
+          .from('adverts')
+          .delete()
+          .eq('id', advertId); // id'si advertId olan satırı sil
+
+      print("Silme işlemi başarılı: $response");
+
+      // Eğer UI’ı güncellemek istiyorsan local listeden de çıkar
+      adverts.removeWhere((ilan) => ilan.id == advertId);
+    } on PostgrestException catch (e) {
+      error.value = "Veritabanı hatası: ${e.message}";
+      print("PostgreSQL Error: ${e.message}");
+    } catch (e) {
+      error.value = "Genel hata: $e";
+      print("General Error: $e");
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   List<Ilan> adverts = [];
 
-  Future<void> fetchAdverts() async{
+  void logout() {
+    AuthService().signOut();
+    Get.offAndToNamed(MobileRoutes.GIRIS);
+  }
+
+  Future<void> fetchAdverts() async {
     try {
       isLoading.value = true;
       error.value = null;
@@ -28,14 +60,13 @@ class ProfilePageController extends GetxController {
       final user = supabase.auth.currentUser;
 
       final response = await supabase
-        .from("adverts")
-        .select()
-        .eq("user_id", user!.id);
+          .from("adverts")
+          .select()
+          .eq("user_id", user!.id);
 
       adverts = (response as List)
-        .map((e) => Ilan.fromJson(e as Map<String, dynamic>),)
-        .toList();
-
+          .map((e) => Ilan.fromJson(e as Map<String, dynamic>))
+          .toList();
     } on PostgrestException catch (e) {
       error.value = "Veritabanı hatası: ${e.message}";
       print("PostgreSQL Error: ${e.message}");
@@ -89,17 +120,14 @@ class ProfilePageController extends GetxController {
       } else {
         print("Created_at field is null in database");
       }
-
     } on PostgrestException catch (e) {
       error.value = "Veritabanı hatası: ${e.message}";
       print("PostgreSQL Error: ${e.message}");
       print("Error details: ${e.details}");
       print("Error hint: ${e.hint}");
-
     } catch (e) {
       error.value = "Genel hata: $e";
       print("General Error: $e");
-
     } finally {
       isLoading.value = false;
     }

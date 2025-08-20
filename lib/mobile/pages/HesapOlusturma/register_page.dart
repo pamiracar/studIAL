@@ -162,33 +162,31 @@ class RegisterPage extends GetView<RegisterPageController> {
                             Expanded(
                               flex: 1, // 50% genişlik
                               child: Obx(() {
-                                return Card(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                    child: DropdownMenu<String>(
-                                      initialSelection:
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  child: DropdownMenu<String>(
+                                    initialSelection:
+                                        controller.selectedSinif.value,
+                                    expandedInsets:
+                                        EdgeInsets.zero, // Tam genişlik için
+                                    onSelected: (String? newValue) {
+                                      if (newValue != null) {
+                                        controller.selectedSinif.value = newValue;
+                                        debugPrint(
                                           controller.selectedSinif.value,
-                                      expandedInsets:
-                                          EdgeInsets.zero, // Tam genişlik için
-                                      onSelected: (String? newValue) {
-                                        if (newValue != null) {
-                                          controller.selectedSinif.value = newValue;
-                                          debugPrint(
-                                            controller.selectedSinif.value,
+                                        );
+                                      }
+                                    },
+                                    dropdownMenuEntries: controller.sinifListesi
+                                        .map<DropdownMenuEntry<String>>((
+                                          String value,
+                                        ) {
+                                          return DropdownMenuEntry<String>(
+                                            value: value,
+                                            label: value,
                                           );
-                                        }
-                                      },
-                                      dropdownMenuEntries: controller.sinifListesi
-                                          .map<DropdownMenuEntry<String>>((
-                                            String value,
-                                          ) {
-                                            return DropdownMenuEntry<String>(
-                                              value: value,
-                                              label: value,
-                                            );
-                                          })
-                                          .toList(),
-                                    ),
+                                        })
+                                        .toList(),
                                   ),
                                 );
                               }),

@@ -27,10 +27,7 @@ class filterCard extends GetView<AnasayfaController> {
             spreadRadius: 0,
           ),
         ],
-        border: Border.all(
-          color: colorScheme.primary.withOpacity(isDark ? 0.3 : 0.15),
-          width: 1,
-        ),
+
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -258,10 +255,7 @@ class filterCard extends GetView<AnasayfaController> {
               ? colorScheme.surfaceVariant.withOpacity(0.3)
               : colorScheme.surfaceVariant.withOpacity(0.5),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: color.withOpacity(isDark ? 0.3 : 0.2),
-              width: 1,
-            ),
+
           ),
           child: Padding(
             padding: const EdgeInsets.all(5.0),

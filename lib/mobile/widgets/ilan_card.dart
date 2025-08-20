@@ -43,6 +43,7 @@ class IlanCard extends GetView<AnasayfaController> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         color: surfaceColor,
         child: Container(
+          padding: EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +133,7 @@ class IlanCard extends GetView<AnasayfaController> {
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: isDark
-                      ? colorScheme.primaryContainer.withOpacity(0.3)
+                      ? colorScheme.primaryContainer.withOpacity(0.1)
                       : colorScheme.primaryContainer.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(

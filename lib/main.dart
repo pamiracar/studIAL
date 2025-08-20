@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'studIAL',
           initialRoute: MobileRoutes.INITIAL,
-          theme: AppThemes.lightTheme,
-          darkTheme: AppThemes.darkTheme,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
           themeMode: ThemeMode.system,
           getPages: [
             GetPage(name: MobileRoutes.CHAT, page:() => ChatPage(), binding: ChatPageBinding()),

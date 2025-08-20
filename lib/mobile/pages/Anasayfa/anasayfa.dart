@@ -424,24 +424,13 @@ class HomePage extends GetView<AnasayfaController> {
                   itemCount: controller.adverts.length,
                   itemBuilder: (BuildContext context, int index) {
                     final advert = controller.adverts[index];
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IlanCard(
-                          isim: advert.userName,
-                          yayinlanmaTarihi: advert.yayinlanmaTarihi,
-                          vermekIstedigiDers: advert.alinacakDers,
-                          karsilikDers: advert.verilecekDers,
-                          sinif: advert.classLevel,
-                          isIletisim: true,
-                        ),
-                        Container(
-                          height: 1,
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurfaceVariant.withOpacity(0.3),
-                        ),
-                      ],
+                    return IlanCard(
+                      isim: advert.userName,
+                      yayinlanmaTarihi: advert.yayinlanmaTarihi,
+                      vermekIstedigiDers: advert.alinacakDers,
+                      karsilikDers: advert.verilecekDers,
+                      sinif: advert.classLevel,
+                      isIletisim: true,
                     );
                   },
                 ),
