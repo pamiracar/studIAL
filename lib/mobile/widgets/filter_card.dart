@@ -27,74 +27,77 @@ class filterCard extends GetView<AnasayfaController> {
             spreadRadius: 0,
           ),
         ],
-
       ),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Filter başlığı
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Row(
                     children: [
-                      Flexible(
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: colorScheme.primary.withOpacity(isDark ? 0.2 : 0.1),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Icon(
-                                Icons.tune_rounded,
-                                color: colorScheme.primary,
-                                size: 20,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Flexible(
-                              child: Text(
-                                "Filtrele",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.onSurface,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary.withOpacity(
+                            isDark ? 0.2 : 0.1,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(
+                          Icons.tune_rounded,
+                          color: colorScheme.primary,
+                          size: 20,
                         ),
                       ),
-                      TextButton.icon(
-                        onPressed: () {
-                          // Filtreleri temizle
-                          controller.selectedDers.value = 'Tümü';
-                          controller.selectedSinif.value = 'Tümü';
-                        },
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        icon: Icon(
-                          Icons.clear_all_rounded,
-                          size: 16,
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        label: Text(
-                          'Temizle',
+                      const SizedBox(width: 12),
+                      Flexible(
+                        child: Text(
+                          "Filtrele",
                           style: TextStyle(
-                            fontSize: 12,
-                            color: colorScheme.onSurfaceVariant,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: colorScheme.onSurface,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                   ),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    // Filtreleri temizle
+                    controller.selectedDers.value = 'Tümü';
+                    controller.selectedSinif.value = 'Tümü';
+                  },
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  icon: Icon(
+                    Icons.clear_all_rounded,
+                    size: 16,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  label: Text(
+                    'Temizle',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: colorScheme.onSurfaceVariant,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
             const SizedBox(height: 20),
 
@@ -120,8 +123,8 @@ class filterCard extends GetView<AnasayfaController> {
                         label: 'Sınıf',
                         icon: Icons.school_rounded,
                         color: isDark
-                          ? colorScheme.secondary
-                          : colorScheme.secondary,
+                            ? colorScheme.secondary
+                            : colorScheme.secondary,
                         value: controller.selectedSinif,
                         items: controller.sinifListesi,
                         isDark: isDark,
@@ -154,8 +157,8 @@ class filterCard extends GetView<AnasayfaController> {
                           label: 'Sınıf',
                           icon: Icons.school_rounded,
                           color: isDark
-                            ? colorScheme.secondary
-                            : colorScheme.secondary,
+                              ? colorScheme.secondary
+                              : colorScheme.secondary,
                           value: controller.selectedSinif,
                           items: controller.sinifListesi,
                           isDark: isDark,
@@ -171,8 +174,9 @@ class filterCard extends GetView<AnasayfaController> {
 
             // Aktif filtreler göstergesi
             Obx(() {
-              final hasActiveFilters = controller.selectedDers.value != 'Tümü' ||
-                                    controller.selectedSinif.value != 'Tümü';
+              final hasActiveFilters =
+                  controller.selectedDers.value != 'Tümü' ||
+                  controller.selectedSinif.value != 'Tümü';
 
               if (!hasActiveFilters) return const SizedBox.shrink();
 
@@ -200,7 +204,8 @@ class filterCard extends GetView<AnasayfaController> {
                               label: controller.selectedDers.value,
                               icon: Icons.book_rounded,
                               color: colorScheme.primary,
-                              onRemove: () => controller.selectedDers.value = 'Tümü',
+                              onRemove: () =>
+                                  controller.selectedDers.value = 'Tümü',
                             ),
                           ),
                         if (controller.selectedSinif.value != 'Tümü')
@@ -209,9 +214,10 @@ class filterCard extends GetView<AnasayfaController> {
                             label: controller.selectedSinif.value,
                             icon: Icons.school_rounded,
                             color: isDark
-                              ? colorScheme.secondary
-                              : colorScheme.secondary,
-                            onRemove: () => controller.selectedSinif.value = 'Tümü',
+                                ? colorScheme.secondary
+                                : colorScheme.secondary,
+                            onRemove: () =>
+                                controller.selectedSinif.value = 'Tümü',
                           ),
                       ],
                     ),
@@ -252,65 +258,60 @@ class filterCard extends GetView<AnasayfaController> {
           width: double.infinity,
           decoration: BoxDecoration(
             color: isDark
-              ? colorScheme.surfaceVariant.withOpacity(0.3)
-              : colorScheme.surfaceVariant.withOpacity(0.5),
+                ? colorScheme.surfaceVariant.withOpacity(0.3)
+                : colorScheme.surfaceVariant.withOpacity(0.5),
             borderRadius: BorderRadius.circular(12),
-
           ),
           child: Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Obx(() => DropdownButtonFormField<String>(
-              value: value.value,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
-                ),
-                prefixIcon: Icon(
-                  icon,
-                  color: color,
-                  size: 18,
-                ),
-              ),
-              dropdownColor: colorScheme.surface,
-              style: TextStyle(
-                color: colorScheme.onSurface,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-              icon: Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: colorScheme.onSurfaceVariant,
-                size: 20,
-              ),
-              isExpanded: true, // Overflow'u önler
-              items: items.map((String item) {
-                return DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: TextStyle(
-                      color: colorScheme.onSurface,
-                      fontSize: 13,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+            child: Obx(
+              () => DropdownButtonFormField<String>(
+                value: value.value,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
                   ),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                if (newValue != null) {
-                  value.value = newValue;
-                }
-              },
-            )),
+                  prefixIcon: Icon(icon, color: color, size: 18),
+                ),
+                dropdownColor: colorScheme.surface,
+                style: TextStyle(
+                  color: colorScheme.onSurface,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
+                icon: Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: colorScheme.onSurfaceVariant,
+                  size: 20,
+                ),
+                isExpanded: true, // Overflow'u önler
+                items: items.map((String item) {
+                  return DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: TextStyle(
+                        color: colorScheme.onSurface,
+                        fontSize: 13,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    value.value = newValue;
+                  }
+                },
+              ),
+            ),
           ),
         ),
       ],
     );
   }
-
-
 
   Widget _buildFilterChip(
     BuildContext context, {
@@ -335,11 +336,7 @@ class filterCard extends GetView<AnasayfaController> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            size: 14,
-            color: color,
-          ),
+          Icon(icon, size: 14, color: color),
           const SizedBox(width: 6),
           Text(
             label,
@@ -358,11 +355,7 @@ class filterCard extends GetView<AnasayfaController> {
                 color: color.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.close_rounded,
-                size: 12,
-                color: color,
-              ),
+              child: Icon(Icons.close_rounded, size: 12, color: color),
             ),
           ),
         ],

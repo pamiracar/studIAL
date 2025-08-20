@@ -42,7 +42,7 @@ class ProfilePage extends GetView<ProfilePageController> {
         centerTitle: false,
         actions: [
           IconButton(
-            onPressed: AuthService().signOut,
+            onPressed: controller.logout,
             icon: Icon(
               Icons.logout,
               color: Theme.of(context).colorScheme.onSurfaceVariant,

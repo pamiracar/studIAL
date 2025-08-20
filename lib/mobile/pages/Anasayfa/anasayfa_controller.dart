@@ -57,6 +57,15 @@ class AnasayfaController extends GetxController {
     fetchProfile();
   }
 
+  List<Ilan> filteredIlans = [];
+
+  Future<void> filterAdvert(String verilecekDers) async {
+    filteredIlans = adverts
+        .where((ilan) => ilan.verilecekDers.contains(verilecekDers))
+        .toList();
+  }
+
+  RxBool shrin = true.obs;
   List<Ilan> adverts = [];
 
   Future<void> fetchAdverts() async {
@@ -65,7 +74,10 @@ class AnasayfaController extends GetxController {
       error.value = null;
       final user = supabase.auth.currentUser;
 
-      final response = await supabase.from("adverts").select().order("yayinlanma_tarihi", ascending: false);
+      final response = await supabase
+          .from("adverts")
+          .select()
+          .order("yayinlanma_tarihi", ascending: false);
       adverts = (response as List)
           .map((item) => Ilan.fromJson(item as Map<String, dynamic>))
           .toList();

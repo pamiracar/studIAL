@@ -26,11 +26,6 @@ class LoginPageController extends GetxController {
         await auth.signInWithEmailAndPassword(email, password);
         debugPrint("Giriş yapıldı");
         Get.offAndToNamed(MobileRoutes.ANASAYFA);
-        Get.snackbar(
-          "Giriş İşlemi Başarılı",
-          "Hesap açma işlemi başarıyla gerçekleştirildi",
-          duration: Duration(seconds: 3),
-        );
       }
     } catch (e) {
       Get.snackbar("Hata", e.toString());
