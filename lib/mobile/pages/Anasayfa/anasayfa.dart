@@ -417,45 +417,24 @@ class HomePage extends GetView<AnasayfaController> {
                   ],
                 ),
                 const SizedBox(height: 20),
+                ListView.builder(
+                  shrinkWrap: controller.shrin.value,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: controller.filtered.isNotEmpty ? controller.filtered.length : controller.adverts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final advert = controller.filtered.isNotEmpty ? controller.filtered[index] : controller.adverts[index];
+                    return IlanCard(
+                      isim: advert.userName,
+                      yayinlanmaTarihi: advert.yayinlanmaTarihi,
+                      vermekIstedigiDers: advert.verilecekDers,
+                      karsilikDers: advert.alinacakDers,
+                      sinif: advert.classLevel,
+                      userID: advert.userId,
+                      isIletisim: true,
 
-                Obx(() {
-                  final filtered = controller.adverts.where((ilan) {
-                    final dersFilter =
-                        controller.selectedDers.value == 'Tümü' ||
-                        ilan.verilecekDers == controller.selectedDers.value;
-
-                    final sinifFilter =
-                        controller.selectedSinif.value == 'Tümü' ||
-                        ilan.classLevel == controller.selectedSinif.value;
-                    return dersFilter && sinifFilter;
-                  }).toList();
-                  if (filtered.isEmpty) {
-                        return Center(
-                          child: Text(
-                            "Hiç ilan bulunamadı",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        );
-                      }
-                  return ListView.builder(
-                    shrinkWrap: controller.shrin.value,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: filtered.length,
-                    itemBuilder: (BuildContext context, int index) {
-
-                      final advert = filtered[index];
-
-                      return IlanCard(
-                        isim: advert.userName,
-                        yayinlanmaTarihi: advert.yayinlanmaTarihi,
-                        vermekIstedigiDers: advert.verilecekDers,
-                        karsilikDers: advert.alinacakDers,
-                        sinif: advert.classLevel,
-                        isIletisim: true,
-                      );
-                    },
-                  );
-                }),
+                    );
+                  },
+                ),
                 // Bottom padding
                 const SizedBox(height: 100),
               ],

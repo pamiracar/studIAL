@@ -242,7 +242,7 @@ class AddIlanPage extends GetView<IlanController> {
                             width: 1,
                           ),
                         ),
-                        child: IlanCard(isim: controller.displayName, yayinlanmaTarihi: controller.yayinlanmaTarihi, vermekIstedigiDers: controller.selectedVerilecekDers.value, karsilikDers: controller.selectedAlinacakDers.value, sinif: controller.displayClass, isIletisim: false,)
+                        child: IlanCard(isim: controller.displayName, yayinlanmaTarihi: controller.yayinlanmaTarihi, vermekIstedigiDers: controller.selectedVerilecekDers.value, karsilikDers: controller.selectedAlinacakDers.value, sinif: controller.displayClass, isIletisim: false, userID: "",)
                       ),
                       const SizedBox(height: 24),
                     ],

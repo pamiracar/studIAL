@@ -57,13 +57,23 @@ class AnasayfaController extends GetxController {
     fetchProfile();
   }
 
-  List<Ilan> filteredIlans = [];
+  RxList filtered = [].obs;
 
-  Future<void> filterAdvert(String verilecekDers) async {
-    filteredIlans = adverts
-        .where((ilan) => ilan.verilecekDers.contains(verilecekDers))
-        .toList();
+  Future<void> filterAdvert() async {
+    filtered.value = adverts.where((ilan) {
+      final dersFilter =
+          selectedDers.value == 'Tümü' ||
+          ilan.verilecekDers == selectedDers.value;
+
+      final sinifFilter =
+          selectedSinif.value == 'Tümü' ||
+          ilan.classLevel == selectedSinif.value;
+      return dersFilter && sinifFilter;
+    }).toList();
+
+    update();
   }
+
 
   RxBool shrin = true.obs;
   List<Ilan> adverts = [];

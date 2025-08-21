@@ -9,6 +9,7 @@ class IlanCard extends GetView<AnasayfaController> {
   final String vermekIstedigiDers;
   final String karsilikDers;
   final String sinif;
+  final String userID;
   final bool isIletisim;
 
   const IlanCard({
@@ -19,6 +20,7 @@ class IlanCard extends GetView<AnasayfaController> {
     required this.karsilikDers,
     required this.sinif,
     required this.isIletisim,
+    required this.userID,
   });
 
   @override
@@ -276,8 +278,8 @@ class IlanCard extends GetView<AnasayfaController> {
                     Expanded(
                       flex: 3,
                       child: ElevatedButton.icon(
-                        onPressed: () {
-                          // İletişim işlemi
+                        onPressed: userID == controller.userId ? null : (){
+
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primaryColor,

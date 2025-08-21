@@ -41,11 +41,37 @@ class ProfilePage extends GetView<ProfilePageController> {
         title: AppbarPageName(name: "Profil"),
         centerTitle: false,
         actions: [
+          IconButton(onPressed:() {
+            showDialog(context: context, builder:(context) {
+              return AlertDialog(
+                title: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.info_outline),
+                    SizedBox(width: 10,),
+                    const Text("Profil Sayfası Hakkında", style: TextStyle(fontStyle: FontStyle.italic),),
+                  ],
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("  Aynı cihaz içerisinde hesap değişikliği sonrası Profil Sayfası ilk açıldığında veriler hatalı gözükebilir. Bu sorunu gidermek için sayfayı yenileyin. Eğer sorun çözülmez ise uygulamayı yeniden başlatın.",)
+                  ],
+                ),
+                actions: [
+                  TextButton(onPressed: Get.back, child: const Text("Anladım",))
+                ],
+              );
+            },);
+          }, icon: Icon(Icons.info_outline)),
           IconButton(
             onPressed: controller.logout,
             icon: Icon(
               Icons.logout,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              color: Colors.red,
             ),
           ),
         ],

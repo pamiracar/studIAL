@@ -68,34 +68,6 @@ class filterCard extends GetView<AnasayfaController> {
                     ],
                   ),
                 ),
-                TextButton.icon(
-                  onPressed: () {
-                    // Filtreleri temizle
-                    controller.selectedDers.value = 'Tümü';
-                    controller.selectedSinif.value = 'Tümü';
-                  },
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  icon: Icon(
-                    Icons.clear_all_rounded,
-                    size: 16,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                  label: Text(
-                    'Temizle',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: colorScheme.onSurfaceVariant,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
               ],
             ),
 
@@ -129,6 +101,7 @@ class filterCard extends GetView<AnasayfaController> {
                         items: controller.sinifListesi,
                         isDark: isDark,
                       ),
+
                     ],
                   );
                 }
@@ -219,12 +192,40 @@ class filterCard extends GetView<AnasayfaController> {
                             onRemove: () =>
                                 controller.selectedSinif.value = 'Tümü',
                           ),
+
                       ],
                     ),
                   ),
+                  SizedBox(height: 20,)
                 ],
               );
             }),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => controller.filterAdvert(),
+                    child: Center(child: const Text("Filtrele")),
+                  ),
+                ),
+                SizedBox(width: 30),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      controller.selectedDers.value = 'Tümü';
+                      controller.selectedSinif.value = 'Tümü';
+                      controller.filterAdvert();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.background,
+                    ),
+                    child: Center(child: Text("Temizle", style: TextStyle(color: colorScheme.primary),)),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

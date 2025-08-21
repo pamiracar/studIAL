@@ -16,8 +16,12 @@ class ProfilePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchProfile();
-    fetchAdverts();
+    fetchStart();
+  }
+
+  Future<void> fetchStart() async {
+    await fetchProfile();
+    await fetchAdverts();
   }
 
   Future<void> deleteAdvert(String advertId) async {
