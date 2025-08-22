@@ -74,7 +74,6 @@ class AnasayfaController extends GetxController {
     update();
   }
 
-
   RxBool shrin = true.obs;
   List<Ilan> adverts = [];
 
@@ -185,4 +184,42 @@ class AnasayfaController extends GetxController {
   // User bilgileri
   String? get userId => supabase.auth.currentUser?.id;
   String? get userMail => supabase.auth.currentUser?.email;
+
+  Future<Map<String, dynamic>?> getConversation(
+    String currentUserId,
+    String otherUserId,
+  ) async {
+    final data = await supabase
+        .from('conversations')
+        .select()
+        .or(
+          'user1_id.eq.$currentUserId,user2_id.eq.$otherUserId, user1_id.eq.$otherUserId,user2_id.eq.$currentUserId',
+        );
+
+    if (data == null || (data is List && data.isEmpty)) {
+      // Conversation yok
+      return null;
+    } else {
+      // Conversation var
+      return (data as List).first as Map<String, dynamic>;
+    }
+  }
+
+  Future<Map<String, dynamic>> createConversation(
+    String currentUserId,
+    String otherUserId,
+  ) async {
+    final data = await supabase.from('conversations').insert({
+      'user1_id': currentUserId,
+      'user2_id': otherUserId,
+      'created_at': DateTime.now().toIso8601String(),
+    }).select();
+
+    return (data as List).first as Map<String, dynamic>;
+  }
+
+  Future<void> iletisimButtonConversationVar() async {}
+  Future<void> iletisimButtonConversationYok() async {}
 }
+
+//chat

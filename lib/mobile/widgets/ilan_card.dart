@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_controller.dart';
+import 'package:studial/mobile/pages/Chat/chat_page.dart';
+import 'package:studial/mobile/pages/Chat/chat_page_binding.dart';
+import 'package:studial/mobile/pages/Chat/chat_page_controller.dart';
+import 'package:studial/mobile/pages/Mesajlar/mesajlar_controller.dart';
 import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 
 class IlanCard extends GetView<AnasayfaController> {
@@ -172,7 +177,9 @@ class IlanCard extends GetView<AnasayfaController> {
                           margin: const EdgeInsets.symmetric(horizontal: 12),
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.orange.withOpacity(isDark ? 0.2 : 0.1),
+                            color: Colors.orange.withOpacity(
+                              isDark ? 0.2 : 0.1,
+                            ),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Icon(
@@ -197,7 +204,9 @@ class IlanCard extends GetView<AnasayfaController> {
                       context: context,
                       icon: Icons.auto_stories_rounded,
                       iconColor: Colors.orange.shade600,
-                      iconBgColor: Colors.orange.withOpacity(isDark ? 0.2 : 0.1),
+                      iconBgColor: Colors.orange.withOpacity(
+                        isDark ? 0.2 : 0.1,
+                      ),
                       title: "Karşılığında almak istediği",
                       subtitle: karsilikDers,
                       subtitleColor: Colors.orange.shade600,
@@ -278,9 +287,46 @@ class IlanCard extends GetView<AnasayfaController> {
                     Expanded(
                       flex: 3,
                       child: ElevatedButton.icon(
-                        onPressed: userID == controller.userId ? null : (){
+                        onPressed: userID == controller.userId
+                            ? null
+                            : () async {
+                                // ID’leri al
+                                final currentUserId = controller
+                                    .userId!; // burayı login user ID ile değiştir
+                                final ilanSahibiId =
+                                    userID;
+                                final ilanSahibiName = isim; // ilan kartındaki userId
 
-                        },
+                                // 1. Conversation var mı kontrol et
+                                final convo = await controller.getConversation(
+                                  currentUserId,
+                                  ilanSahibiId,
+                                );
+
+                                String convoId;
+                                if (convo != null) {
+                                  convoId = convo['id'];
+                                } else {
+                                  final newConvo = await controller
+                                      .createConversation(
+                                        currentUserId,
+                                        ilanSahibiId,
+                                      );
+                                  convoId = newConvo['id'];
+                                }
+
+                                // 2. ChatPage’e git
+                                Get.to(
+                                  () {
+                                    Get.put(ChatController());
+                                    return ChatPage(
+                                    conversationId: convoId,
+                                    currentUserId: currentUserId,
+                                    advertUserName: ilanSahibiName,
+                                  );
+                                  },
+                                );
+                              },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: primaryColor,
                           foregroundColor: colorScheme.onPrimary,

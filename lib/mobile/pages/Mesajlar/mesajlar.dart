@@ -7,8 +7,8 @@ import 'package:studial/mobile/widgets/message_items.dart';
 import 'package:studial/mobile/widgets/page_baslik.dart';
 import 'package:studial/other/AppRoutes.dart';
 
-class ChatPage extends GetView<ChatPageController> {
-  const ChatPage({super.key});
+class ChatPageL extends GetView<ChatPageControllerL> {
+  const ChatPageL({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:studial/mobile/pages/%C4%B0lanEkleme/ilan_binding.dart';
 import 'package:studial/mobile/pages/%C4%B0lanEkleme/ilan_ekleme.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_binding.dart';
+import 'package:studial/mobile/pages/Chat/chat_page.dart';
 import 'package:studial/mobile/pages/Mesajlar/mesajlar.dart';
 import 'package:studial/mobile/pages/Mesajlar/mesajlar_binding.dart';
 import 'package:studial/other/AppRoutes.dart';
@@ -43,12 +44,13 @@ class MyApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           themeMode: ThemeMode.system,
           getPages: [
-            GetPage(name: MobileRoutes.CHAT, page:() => ChatPage(), binding: ChatPageBinding()),
+            GetPage(name: MobileRoutes.CHATL, page:() => ChatPageL(), binding: ChatPageBindingL()),
             GetPage(name: MobileRoutes.ANASAYFA, page:() => HomePage(), binding: AnasayfaBinding()),
             GetPage(name: MobileRoutes.PROFIL, page: () => ProfilePage(), binding: ProfilePageBinding()),
             GetPage(name: MobileRoutes.GIRIS, page: () => LoginPage(), binding: LoginPageBinding()),
             GetPage(name: MobileRoutes.ILAN, page:() => AddIlanPage(), binding: IlanBinding()),
             GetPage(name: MobileRoutes.OLUSTUR, page: () => RegisterPage(), binding: RegisterPageBinding()),
+
             GetPage(name: MobileRoutes.INITIAL, page: () => ResponsiveLayout()),
             GetPage(name: WebRoutes.HOME_W, page: () => HomeWebPage()),
           ],

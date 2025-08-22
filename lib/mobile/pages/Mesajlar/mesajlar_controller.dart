@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ChatPageController extends GetxController{
+class ChatPageControllerL extends GetxController{
   RxInt ry = 0.obs;
   final supabase = Supabase.instance.client;
 
