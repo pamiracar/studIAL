@@ -66,11 +66,18 @@ class ChatController extends GetxController {
         .onPostgresChanges(
           event: PostgresChangeEvent.all,
           schema: "public",
-          callback: (payload) {
+          callback: (payload) async {
             print(payload);
             final newMsg = payload.newRecord;
             messages.add(newMsg);
             _scrollToBottom();
+            await supabase
+                .from('conversations')
+                .update({
+                  'last_message': payload.newRecord,
+                  'last_message_at': DateTime.now().toIso8601String(),
+                })
+                .eq('id', conversationId);
           },
         )
         .subscribe();

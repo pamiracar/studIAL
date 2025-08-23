@@ -319,14 +319,4 @@ class ChatPageL extends GetView<ChatPageControllerL> {
     );
   }
 
-  String _getUserName(int index) {
-    final names = [
-      'Ahmet Kaya',
-      'Mehmet Sönmez',
-      'Elif Yılmaz',
-      'Burak Tekin',
-      'Derya Mert',
-    ];
-    return names[index % names.length];
-  }
 }

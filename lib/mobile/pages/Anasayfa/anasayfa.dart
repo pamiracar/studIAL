@@ -58,7 +58,7 @@ class HomePage extends GetView<AnasayfaController> {
                 if (value == 'profil') {
                   Get.offAndToNamed(MobileRoutes.PROFIL);
                 } else if (value == 'mesajlar') {
-                  Get.offAndToNamed(MobileRoutes.CHAT);
+                  Get.offAndToNamed(MobileRoutes.CHATL);
                 }
               },
               itemBuilder: (context) => [

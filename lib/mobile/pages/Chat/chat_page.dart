@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studial/mobile/pages/Chat/chat_page_controller.dart';
+import 'package:studial/mobile/widgets/appBar_page_name.dart';
+import 'package:studial/other/AppRoutes.dart';
 
 class ChatPage extends GetView<ChatController> {
   final String conversationId;
@@ -16,7 +18,21 @@ class ChatPage extends GetView<ChatController> {
     controller.setConversation(conversationId);
 
     return Scaffold(
-      appBar: AppBar(title: Text(advertUserName)),
+      appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 1,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+          onPressed: () => Get.offAndToNamed(MobileRoutes.ANASAYFA),
+        ),
+        centerTitle: false,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        surfaceTintColor: Colors.transparent,
+        title: Row(children: [AppbarPageName(name: advertUserName)]),
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         children: [

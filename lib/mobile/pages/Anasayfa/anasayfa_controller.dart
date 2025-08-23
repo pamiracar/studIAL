@@ -193,15 +193,17 @@ class AnasayfaController extends GetxController {
         .from('conversations')
         .select()
         .or(
-          'user1_id.eq.$currentUserId,user2_id.eq.$otherUserId, user1_id.eq.$otherUserId,user2_id.eq.$currentUserId',
-        );
+          'and(user1_id.eq.$currentUserId,user2_id.eq.$otherUserId),' +
+              'and(user1_id.eq.$otherUserId,user2_id.eq.$currentUserId)',
+        )
+        .maybeSingle();
 
     if (data == null || (data is List && data.isEmpty)) {
       // Conversation yok
       return null;
     } else {
       // Conversation var
-      return (data as List).first as Map<String, dynamic>;
+      return data;
     }
   }
 
@@ -217,9 +219,6 @@ class AnasayfaController extends GetxController {
 
     return (data as List).first as Map<String, dynamic>;
   }
-
-  Future<void> iletisimButtonConversationVar() async {}
-  Future<void> iletisimButtonConversationYok() async {}
 }
 
 //chat
