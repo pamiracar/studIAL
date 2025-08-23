@@ -23,6 +23,7 @@ class ChatPage extends GetView<ChatController> {
           Expanded(
             child: Obx(
               () => ListView.builder(
+                controller: controller.scrollController,
                 padding: const EdgeInsets.all(16),
                 itemCount: controller.messages.length,
                 itemBuilder: (context, index) {
@@ -51,7 +52,7 @@ class ChatPage extends GetView<ChatController> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             color: Theme.of(context).colorScheme.background,
             child: Row(
               children: [
