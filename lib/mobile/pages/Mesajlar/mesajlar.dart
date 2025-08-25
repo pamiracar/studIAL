@@ -16,16 +16,14 @@ class ChatPageL extends GetView<ChatPageControllerL> {
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
 
+
     return Scaffold(
       backgroundColor: colorScheme.background,
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 1,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: colorScheme.onSurfaceVariant,
-          ),
+          icon: Icon(Icons.arrow_back_ios, color: colorScheme.onSurfaceVariant),
           onPressed: () => Get.offAndToNamed(MobileRoutes.ANASAYFA),
         ),
         backgroundColor: colorScheme.surface,
@@ -298,14 +296,40 @@ class ChatPageL extends GetView<ChatPageControllerL> {
                 ),
                 const SizedBox(height: 20),
 
-                // Mesaj listesi
-                MessageItemWidget(
-                  name: "Pamir Açar",
-                  lastMessage: "Deneme Mesajı",
-                  isUnread: true,
-                  isOnline: true,
-                  time: "12 dk",
-                ),
+                Obx(() {
+                  if (controller.isLoadingConversations.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (controller.conversations.isEmpty) {
+                    return const Center(child: Text("Henüz konuşma yok"));
+                  }
+
+                  return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: controller.conversations.length,
+                    itemBuilder: (context, index) {
+                      final conv = controller.conversations[index];
+                      final unread = controller.isUnread(conv);
+                      final otherName = controller.otherUserNameOf(conv);
+                      final otherId = controller.otherUserIdOf(conv);
+                      final lastMsg =
+                          conv['last_message'] as String? ?? "Mesaj yok";
+                      final updatedAt = conv['last_message_at']?.toString() ?? '';
+
+                      return MessageItemWidget(
+                        name: otherName,
+                        lastMessage: lastMsg,
+                        time: updatedAt,
+                        isUnread: unread,
+                        isOnline:
+                            false,
+                        onTap: () =>
+                            controller.openConversation(conv['id'] as String, otherUserId: otherId, otherUserName: otherName),
+                      );
+                    },
+                  );
+                }),
 
                 const SizedBox(height: 32),
 
@@ -318,5 +342,4 @@ class ChatPageL extends GetView<ChatPageControllerL> {
       }),
     );
   }
-
 }

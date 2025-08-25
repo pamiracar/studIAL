@@ -212,7 +212,7 @@ class AnasayfaController extends GetxController {
     String otherUserId,
   ) async {
     final data = await supabase.from('conversations').insert({
-      'user1_id': currentUserId,
+      'user1_id': supabase.auth.currentUser!.id,
       'user2_id': otherUserId,
       'created_at': DateTime.now().toIso8601String(),
     }).select();

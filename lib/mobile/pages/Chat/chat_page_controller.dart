@@ -5,6 +5,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class ChatController extends GetxController {
   final supabase = Supabase.instance.client;
   final ScrollController scrollController = ScrollController();
+  late String IlanSahibiId;
+
+  void setData(String data) {
+    IlanSahibiId = data;
+    update(); // UI güncellemesi için
+  }
 
   final conversationId = ''.obs; // aktif chat id
   var messages = <Map<String, dynamic>>[].obs; // mesajlar
@@ -52,7 +58,15 @@ class ChatController extends GetxController {
       'created_at': DateTime.now().toIso8601String(),
     });
 
-    _scrollToBottom();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 
   void listenNewMessages() {
@@ -67,18 +81,22 @@ class ChatController extends GetxController {
           event: PostgresChangeEvent.all,
           schema: "public",
           callback: (payload) async {
-            print(payload);
-            final newMsg = payload.newRecord;
+          final raw = payload.newRecord;
+          if (raw != null && raw['content'] != null) {
+            final newMsg = Map<String, dynamic>.from(raw);
             messages.add(newMsg);
             _scrollToBottom();
+
             await supabase
                 .from('conversations')
                 .update({
-                  'last_message': payload.newRecord,
+                  'last_message': newMsg["content"],
                   'last_message_at': DateTime.now().toIso8601String(),
+                  'unread_by': [IlanSahibiId],
                 })
-                .eq('id', conversationId);
-          },
+                .eq('id', conversationId.value);
+          }
+        },
         )
         .subscribe();
   }

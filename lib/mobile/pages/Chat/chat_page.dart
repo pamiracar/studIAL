@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studial/mobile/pages/Chat/chat_page_controller.dart';
@@ -8,14 +9,22 @@ class ChatPage extends GetView<ChatController> {
   final String conversationId;
   final String currentUserId;
   final String advertUserName;
+  final String advertUserId;
 
-  ChatPage({required this.conversationId, required this.currentUserId, required this.advertUserName, super.key});
+  ChatPage({
+    required this.advertUserId,
+    required this.conversationId,
+    required this.currentUserId,
+    required this.advertUserName,
+    super.key,
+  });
 
   final TextEditingController textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     controller.setConversation(conversationId);
+    controller.setData(advertUserId);
 
     return Scaffold(
       appBar: AppBar(
@@ -47,18 +56,24 @@ class ChatPage extends GetView<ChatController> {
                   final isMe = msg['sender_id'] == currentUserId;
 
                   return Align(
-                    alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+                    alignment: isMe
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 4),
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: isMe ? Theme.of(context).colorScheme.primary : Colors.grey[300],
+                        color: isMe
+                            ? Theme.of(context).colorScheme.primary
+                            : Colors.grey[300],
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         msg['content'],
                         style: TextStyle(
-                          color: isMe ? Theme.of(context).colorScheme.background : Colors.black87,
+                          color: isMe
+                              ? Theme.of(context).colorScheme.background
+                              : Colors.black87,
                         ),
                       ),
                     ),
@@ -82,10 +97,16 @@ class ChatPage extends GetView<ChatController> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send, color: Theme.of(context).colorScheme.onSurfaceVariant,),
+                  icon: Icon(
+                    Icons.send,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                   onPressed: () {
                     if (textController.text.trim().isEmpty) return;
-                    controller.sendMessage(currentUserId, textController.text.trim());
+                    controller.sendMessage(
+                      currentUserId,
+                      textController.text.trim(),
+                    );
                     textController.clear();
                   },
                 ),

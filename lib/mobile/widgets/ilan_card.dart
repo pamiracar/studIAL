@@ -323,6 +323,7 @@ class IlanCard extends GetView<AnasayfaController> {
                                     conversationId: convoId,
                                     currentUserId: currentUserId,
                                     advertUserName: ilanSahibiName,
+                                    advertUserId: ilanSahibiId,
                                   );
                                   },
                                 );
