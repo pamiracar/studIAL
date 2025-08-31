@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:studial/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatController extends GetxController {
@@ -12,10 +13,19 @@ class ChatController extends GetxController {
     update(); // UI güncellemesi için
   }
 
-  final conversationId = ''.obs; // aktif chat id
-  var messages = <Map<String, dynamic>>[].obs; // mesajlar
+  Future<void> setUnreadNull(String converId) async {
+    debugPrint("setUnreadNull çalıştı: ${conversationId.value}");
+    await supabase
+        .from("conversations")
+        .update({'unread_by': []})
+        .eq("id", conversationId.value);
+  }
 
-  RealtimeChannel? _channel; // realtime channel
+
+  final conversationId = ''.obs;
+  var messages = <Map<String, dynamic>>[].obs;
+
+  RealtimeChannel? _channel;
 
   void setConversation(String id) {
     conversationId.value = id;
@@ -81,22 +91,22 @@ class ChatController extends GetxController {
           event: PostgresChangeEvent.all,
           schema: "public",
           callback: (payload) async {
-          final raw = payload.newRecord;
-          if (raw != null && raw['content'] != null) {
-            final newMsg = Map<String, dynamic>.from(raw);
-            messages.add(newMsg);
-            _scrollToBottom();
+            final raw = payload.newRecord;
+            if (raw != null && raw['content'] != null) {
+              final newMsg = Map<String, dynamic>.from(raw);
+              messages.add(newMsg);
+              _scrollToBottom();
 
-            await supabase
-                .from('conversations')
-                .update({
-                  'last_message': newMsg["content"],
-                  'last_message_at': DateTime.now().toIso8601String(),
-                  'unread_by': [IlanSahibiId],
-                })
-                .eq('id', conversationId.value);
-          }
-        },
+              await supabase
+                  .from('conversations')
+                  .update({
+                    'last_message': newMsg["content"],
+                    'last_message_at': DateTime.now().toIso8601String(),
+                    'unread_by': [IlanSahibiId],
+                  })
+                  .eq('id', conversationId.value);
+            }
+          },
         )
         .subscribe();
   }

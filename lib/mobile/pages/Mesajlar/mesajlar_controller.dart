@@ -159,7 +159,6 @@ class ChatPageControllerL extends GetxController {
         }
       }
 
-      // Her profili detaylı logla
       for (int i = 0; i < profiles.length; i++) {
         final profile = profiles[i];
         debugPrint("Profile $i: $profile");
@@ -167,13 +166,11 @@ class ChatPageControllerL extends GetxController {
         debugPrint("  - Name: ${profile['name']} (${profile['name'].runtimeType})");
       }
 
-      // Önce tüm ID'ler için default değer ata
       for (final id in ids) {
         otherNames[id] = 'Kullanıcı [Default]';
         debugPrint("Set default name for $id");
       }
 
-      // Sonra gerçek isimleri ata
       for (final profile in profiles) {
         final id = profile['id'] as String?;
         final name = profile['name'] as String?;
@@ -199,7 +196,7 @@ class ChatPageControllerL extends GetxController {
 
       // UI'ı güncelle
       conversations.refresh();
-      
+
 
     } catch (e) {
       debugPrint("❌ Error preloading names: $e");

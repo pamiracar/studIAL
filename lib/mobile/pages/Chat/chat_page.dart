@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studial/mobile/pages/Chat/chat_page_controller.dart';
@@ -25,6 +24,7 @@ class ChatPage extends GetView<ChatController> {
   Widget build(BuildContext context) {
     controller.setConversation(conversationId);
     controller.setData(advertUserId);
+    controller.setUnreadNull(conversationId);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +35,7 @@ class ChatPage extends GetView<ChatController> {
             Icons.arrow_back_ios,
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
-          onPressed: () => Get.offAndToNamed(MobileRoutes.ANASAYFA),
+          onPressed: () => Get.offAndToNamed(MobileRoutes.CHATL),
         ),
         centerTitle: false,
         backgroundColor: Theme.of(context).colorScheme.surface,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_controller.dart';
 import 'package:studial/mobile/pages/Mesajlar/mesajlar_controller.dart';
 import 'package:studial/mobile/widgets/appBar_page_name.dart';
@@ -316,11 +317,17 @@ class ChatPageL extends GetView<ChatPageControllerL> {
                       final lastMsg =
                           conv['last_message'] as String? ?? "Mesaj yok";
                       final updatedAt = conv['last_message_at']?.toString() ?? '';
+                      String formattedUpdatedAt = "";
+
+                      if(updatedAt != null && updatedAt.isNotEmpty) {
+                        final dt = DateTime.parse(updatedAt).toLocal();
+                        formattedUpdatedAt = DateFormat("dd.MM.yyyy HH:mm").format(dt);
+                      }
 
                       return MessageItemWidget(
                         name: otherName,
                         lastMessage: lastMsg,
-                        time: updatedAt,
+                        time: formattedUpdatedAt,
                         isUnread: unread,
                         isOnline:
                             false,
