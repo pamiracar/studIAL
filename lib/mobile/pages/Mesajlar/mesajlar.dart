@@ -17,7 +17,6 @@ class ChatPageL extends GetView<ChatPageControllerL> {
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
 
-
     return Scaffold(
       backgroundColor: colorScheme.background,
       appBar: AppBar(
@@ -316,23 +315,109 @@ class ChatPageL extends GetView<ChatPageControllerL> {
                       final otherId = controller.otherUserIdOf(conv);
                       final lastMsg =
                           conv['last_message'] as String? ?? "Mesaj yok";
-                      final updatedAt = conv['last_message_at']?.toString() ?? '';
+                      final updatedAt =
+                          conv['last_message_at']?.toString() ?? '';
                       String formattedUpdatedAt = "";
 
-                      if(updatedAt != null && updatedAt.isNotEmpty) {
+                      if (updatedAt != null && updatedAt.isNotEmpty) {
                         final dt = DateTime.parse(updatedAt).toLocal();
-                        formattedUpdatedAt = DateFormat("dd.MM.yyyy HH:mm").format(dt);
+                        formattedUpdatedAt = DateFormat(
+                          "dd.MM.yyyy HH:mm",
+                        ).format(dt);
                       }
 
-                      return MessageItemWidget(
-                        name: otherName,
-                        lastMessage: lastMsg,
-                        time: formattedUpdatedAt,
-                        isUnread: unread,
-                        isOnline:
-                            false,
-                        onTap: () =>
-                            controller.openConversation(conv['id'] as String, otherUserId: otherId, otherUserName: otherName),
+                      return GestureDetector(
+                        onLongPress: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text("Konuşma Siliniyor"),
+                                content: Text(
+                                  "$otherName ile yapılan konuşmayı sildiğinizde karşı tarafta bu konuşma bir daha gözükmeyecektir. Bu sebeble silmeden karşı tarafın da onayını aldığınızdan emin olun!",
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            content: const Text(
+                                              "Bu işlem geri alınamaz. Vazgeçmek için son şansın!",
+                                            ),
+                                            title: const Text(
+                                              "Son Şans",
+                                              style: TextStyle(
+                                                fontStyle: FontStyle.italic,
+                                              ),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () async {
+                                                  await controller.supabase
+                                                      .from("conversations")
+                                                      .delete()
+                                                      .eq("id", conv);
+
+                                                  Get.back();
+                                                  Get.snackbar(
+                                                    "Silindi",
+                                                    "Sohbet silindi!",
+                                                  );
+                                                },
+                                                child: const Text(
+                                                  "Sil",
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                },
+                                                child: const Text(
+                                                  "İptal",
+
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: const Text(
+                                      "Sil",
+                                      style: TextStyle(color: Colors.red),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text(
+                                      "İptal",
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: MessageItemWidget(
+                          name: otherName,
+                          lastMessage: lastMsg,
+                          time: formattedUpdatedAt,
+                          isUnread: unread,
+                          isOnline: false,
+                          onTap: () => controller.openConversation(
+                            conv['id'] as String,
+                            otherUserId: otherId,
+                            otherUserName: otherName,
+                          ),
+                        ),
                       );
                     },
                   );
