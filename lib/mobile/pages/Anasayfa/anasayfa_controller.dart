@@ -55,6 +55,7 @@ class AnasayfaController extends GetxController {
     super.onInit();
     fetchAdverts();
     fetchProfile();
+    filterAdvert();
   }
 
   RxList filtered = [].obs;
@@ -69,6 +70,7 @@ class AnasayfaController extends GetxController {
           selectedSinif.value == 'Tümü' ||
           ilan.classLevel == selectedSinif.value;
       return dersFilter && sinifFilter;
+
     }).toList();
 
     update();
@@ -91,6 +93,7 @@ class AnasayfaController extends GetxController {
           .map((item) => Ilan.fromJson(item as Map<String, dynamic>))
           .toList();
       ilanSayisi.value = adverts.length;
+      filterAdvert();
     } on PostgrestException catch (e) {
       error.value = "Veritabanı hatası: ${e.message}";
       print("PostgreSQL Error: ${e.message}");

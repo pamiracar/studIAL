@@ -206,7 +206,10 @@ class filterCard extends GetView<AnasayfaController> {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () => controller.filterAdvert(),
+                    onPressed: () {
+                      debugPrint("Filtere butonuna basıldı");
+                      controller.filterAdvert();
+                    },
                     child: Center(child: const Text("Filtrele")),
                   ),
                 ),
@@ -214,6 +217,7 @@ class filterCard extends GetView<AnasayfaController> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      debugPrint("temizleye basıldı");
                       controller.selectedDers.value = 'Tümü';
                       controller.selectedSinif.value = 'Tümü';
                       controller.filterAdvert();

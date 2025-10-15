@@ -420,7 +420,7 @@ class HomePage extends GetView<AnasayfaController> {
                 ListView.builder(
                   shrinkWrap: controller.shrin.value,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.filtered.isNotEmpty ? controller.filtered.length : controller.adverts.length,
+                  itemCount: controller.filtered.length,
                   itemBuilder: (BuildContext context, int index) {
                     final advert = controller.filtered.isNotEmpty ? controller.filtered[index] : controller.adverts[index];
                     return IlanCard(

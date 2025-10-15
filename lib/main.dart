@@ -6,9 +6,6 @@ import 'package:studial/mobile/pages/%C4%B0lanEkleme/ilan_binding.dart';
 import 'package:studial/mobile/pages/%C4%B0lanEkleme/ilan_ekleme.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_binding.dart';
-import 'package:studial/mobile/pages/Chat/chat_page.dart';
-import 'package:studial/mobile/pages/Mesajlar/mesajlar.dart';
-import 'package:studial/mobile/pages/Mesajlar/mesajlar_binding.dart';
 import 'package:studial/other/AppRoutes.dart';
 import 'package:studial/mobile/pages/Profil/profile_page.dart';
 import 'package:studial/mobile/pages/Profil/profile_page_binding.dart';
@@ -18,7 +15,6 @@ import 'package:studial/mobile/pages/HesapOlusturma/register_page.dart';
 import 'package:studial/mobile/pages/HesapOlusturma/register_page_binding.dart';
 import 'package:studial/other/responsive.dart';
 import 'package:studial/other/theme.dart';
-import 'package:studial/web/pages/HomeWeb/home_web_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 var logger = Logger();
@@ -35,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(360, 780),
+      designSize: Size(412, 915), //Samsung A55: 360,780    İphone 15 Pro Max 430,932  Android_Em 412,915
       builder: (context, child) {
         return GetMaterialApp(
           title: 'studIAL',
@@ -44,15 +40,12 @@ class MyApp extends StatelessWidget {
           darkTheme: AppTheme.darkTheme,
           themeMode: ThemeMode.system,
           getPages: [
-            GetPage(name: MobileRoutes.CHATL, page:() => ChatPageL(), binding: ChatPageBindingL()),
             GetPage(name: MobileRoutes.ANASAYFA, page:() => HomePage(), binding: AnasayfaBinding()),
             GetPage(name: MobileRoutes.PROFIL, page: () => ProfilePage(), binding: ProfilePageBinding()),
             GetPage(name: MobileRoutes.GIRIS, page: () => LoginPage(), binding: LoginPageBinding()),
             GetPage(name: MobileRoutes.ILAN, page:() => AddIlanPage(), binding: IlanBinding()),
             GetPage(name: MobileRoutes.OLUSTUR, page: () => RegisterPage(), binding: RegisterPageBinding()),
-
             GetPage(name: MobileRoutes.INITIAL, page: () => ResponsiveLayout()),
-            GetPage(name: WebRoutes.HOME_W, page: () => HomeWebPage()),
           ],
           debugShowCheckedModeBanner: false,
         );

@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_controller.dart';
-import 'package:studial/mobile/pages/Chat/chat_page.dart';
-import 'package:studial/mobile/pages/Chat/chat_page_binding.dart';
-import 'package:studial/mobile/pages/Chat/chat_page_controller.dart';
-import 'package:studial/mobile/pages/Mesajlar/mesajlar_controller.dart';
 import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 
 class IlanCard extends GetView<AnasayfaController> {
@@ -279,79 +275,6 @@ class IlanCard extends GetView<AnasayfaController> {
                       ),
                     ),
                   ),
-
-                  const SizedBox(width: 12),
-
-                  // İletişim butonu
-                  if (isIletisim) ...[
-                    Expanded(
-                      flex: 3,
-                      child: ElevatedButton.icon(
-                        onPressed: userID == controller.userId
-                            ? null
-                            : () async {
-                                // ID’leri al
-                                final currentUserId = controller
-                                    .userId!; // burayı login user ID ile değiştir
-                                final ilanSahibiId =
-                                    userID;
-                                final ilanSahibiName = isim; // ilan kartındaki userId
-
-                                // 1. Conversation var mı kontrol et
-                                final convo = await controller.getConversation(
-                                  currentUserId,
-                                  ilanSahibiId,
-                                );
-
-                                String convoId;
-                                if (convo != null) {
-                                  convoId = convo['id'];
-                                } else {
-                                  final newConvo = await controller
-                                      .createConversation(
-                                        currentUserId,
-                                        ilanSahibiId,
-                                      );
-                                  convoId = newConvo['id'];
-                                }
-
-                                // 2. ChatPage’e git
-                                Get.to(
-                                  () {
-                                    Get.put(ChatController());
-                                    return ChatPage(
-                                    conversationId: convoId,
-                                    currentUserId: currentUserId,
-                                    advertUserName: ilanSahibiName,
-                                    advertUserId: ilanSahibiId,
-                                  );
-                                  },
-                                );
-                              },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          foregroundColor: colorScheme.onPrimary,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 14,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: isDark ? 4 : 2,
-                        ),
-                        icon: const Icon(Icons.chat_rounded, size: 16),
-                        label: const Text(
-                          'İletişim',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ] else
-                    SizedBox(),
                 ],
               ),
             ],
