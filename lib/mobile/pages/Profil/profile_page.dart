@@ -41,38 +41,52 @@ class ProfilePage extends GetView<ProfilePageController> {
         title: AppbarPageName(name: "Profil"),
         centerTitle: false,
         actions: [
-          IconButton(onPressed:() {
-            showDialog(context: context, builder:(context) {
-              return AlertDialog(
-                title: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Icon(Icons.info_outline),
-                    SizedBox(width: 10,),
-                    const Text("Profil Sayfası Hakkında", style: TextStyle(fontStyle: FontStyle.italic),),
-                  ],
-                ),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("  Aynı cihaz içerisinde hesap değişikliği sonrası Profil Sayfası ilk açıldığında veriler hatalı gözükebilir. Bu sorunu gidermek için sayfayı yenileyin. Eğer sorun çözülmez ise uygulamayı yeniden başlatın.",)
-                  ],
-                ),
-                actions: [
-                  TextButton(onPressed: Get.back, child: const Text("Anladım",))
-                ],
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.info_outline),
+                        SizedBox(width: 10),
+                        const Text(
+                          "Profil Sayfası Hakkında",
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                      ],
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "  Aynı cihaz içerisinde hesap değişikliği sonrası Profil Sayfası ilk açıldığında veriler hatalı gözükebilir. Bu sorunu gidermek için sayfayı yenileyin. Eğer sorun çözülmez ise uygulamayı yeniden başlatın.",
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: Get.back,
+                        child: const Text("Anladım"),
+                      ),
+                    ],
+                  );
+                },
               );
-            },);
-          }, icon: Icon(Icons.info_outline)),
+            },
+            icon: Icon(
+              Icons.info_outline,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
           IconButton(
             onPressed: controller.logout,
-            icon: Icon(
-              Icons.logout,
-              color: Colors.red,
-            ),
+            icon: Icon(Icons.logout, color: Colors.red),
           ),
         ],
       ),
@@ -406,19 +420,98 @@ class ProfilePage extends GetView<ProfilePageController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.orange.withOpacity(
-                                  isDark ? 0.2 : 0.1,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.orange.withOpacity(
+                                      isDark ? 0.2 : 0.1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Icon(
+                                    Icons.school_rounded,
+                                    color: Colors.orange,
+                                    size: 16,
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Icon(
-                                Icons.school_rounded,
-                                color: Colors.orange,
-                                size: 16,
-                              ),
+                                GestureDetector(
+                                  onTap: () {
+                                    //sınıf seviyesi belirleme
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: const Text(
+                                            "Sınıf Seviyeni Değiştir",
+                                          ),
+                                          content: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    "Yeni sınıf seviyenizi aşağıdan seçebilirsiniz.",
+                                                  ),
+                                                ],
+                                              ),
+                                              Obx(() {
+                                                return DropdownMenu<String>(
+                                                  initialSelection: controller
+                                                      .selectedSinif
+                                                      .value,
+                                                  onSelected:
+                                                      (String? newValue) {
+                                                        if (newValue != null) {
+                                                          controller
+                                                                  .selectedSinif
+                                                                  .value =
+                                                              newValue;
+                                                        }
+                                                      },
+                                                  dropdownMenuEntries: controller.siniflar
+                                                      .map((value) {
+                                                        return DropdownMenuEntry<
+                                                          String
+                                                        >(
+                                                          value: value,
+                                                          label: value,
+                                                        );
+                                                      })
+                                                      .toList(),
+                                                );
+                                              }),
+                                            ],
+                                          ),
+                                          actions: [
+                                            //Burada kaldın
+
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange.withOpacity(
+                                        isDark ? 0.09 : 0.11,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Icon(
+                                      Icons.edit_outlined,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurfaceVariant,
+                                      size: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 12),
                             Text(
@@ -548,14 +641,14 @@ class ProfilePage extends GetView<ProfilePageController> {
                                 ),
                                 actions: [
                                   TextButton(
-                                    onPressed:() => Get.back(),
+                                    onPressed: () => Get.back(),
                                     child: const Text(
                                       "İptal",
                                       style: TextStyle(color: Colors.blue),
                                     ),
                                   ),
                                   TextButton(
-                                    onPressed:() {
+                                    onPressed: () {
                                       controller.deleteAdvert(advert.id);
                                       Get.back();
                                     },

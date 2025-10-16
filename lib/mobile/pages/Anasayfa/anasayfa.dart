@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_controller.dart';
-import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 import 'package:studial/mobile/widgets/appBar_page_name.dart';
 import 'package:studial/mobile/widgets/filter_card.dart';
 import 'package:studial/mobile/widgets/ilan_card.dart';
@@ -43,66 +42,14 @@ class HomePage extends GetView<AnasayfaController> {
                   : colorScheme.surfaceVariant.withOpacity(0.5),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: PopupMenuButton<String>(
-              icon: Icon(
-                Icons.more_vert_rounded,
-                color: colorScheme.onSurfaceVariant,
-              ),
-              elevation: 8,
-              color: colorScheme.surface,
-              shadowColor: colorScheme.shadow.withOpacity(0.2),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14),
-              ),
-              onSelected: (value) {
-                if (value == 'profil') {
-                  Get.offAndToNamed(MobileRoutes.PROFIL);
-                } else if (value == 'mesajlar') {
-                  Get.offAndToNamed(MobileRoutes.CHATL);
-                }
+            child: IconButton(
+              onPressed: () {
+                Get.offAndToNamed(MobileRoutes.PROFIL);
               },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 'profil',
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.person_rounded,
-                        color: colorScheme.onSurfaceVariant,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'Profil',
-                        style: TextStyle(
-                          color: colorScheme.onSurface,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                PopupMenuItem(
-                  value: 'mesajlar',
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.chat_rounded,
-                        color: colorScheme.onSurfaceVariant,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 12),
-                      Text(
-                        'Mesajlar',
-                        style: TextStyle(
-                          color: colorScheme.onSurface,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              icon: Icon(
+                Icons.settings_sharp,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ),
         ],
@@ -422,7 +369,9 @@ class HomePage extends GetView<AnasayfaController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.filtered.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final advert = controller.filtered.isNotEmpty ? controller.filtered[index] : controller.adverts[index];
+                    final advert = controller.filtered.isNotEmpty
+                        ? controller.filtered[index]
+                        : controller.adverts[index];
                     return IlanCard(
                       isim: advert.userName,
                       yayinlanmaTarihi: advert.yayinlanmaTarihi,
@@ -431,7 +380,6 @@ class HomePage extends GetView<AnasayfaController> {
                       sinif: advert.classLevel,
                       userID: advert.userId,
                       isIletisim: true,
-
                     );
                   },
                 ),

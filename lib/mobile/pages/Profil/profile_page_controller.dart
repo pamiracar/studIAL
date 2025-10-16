@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:studial/models/ilan.dart';
 import 'package:studial/other/AppRoutes.dart';
@@ -12,6 +13,15 @@ class ProfilePageController extends GetxController {
   var createdAt = Rxn<DateTime>();
   var isLoading = false.obs;
   var error = Rxn<String>();
+  final siniflar = [
+    'Hazırlık',
+    '9. Sınıf',
+    '10. Sınıf',
+    '11. Sınıf',
+    '12. Sınıf',
+  ];
+
+  late Rxn<String> selectedSinif = userClass;
 
   @override
   void onInit() {
@@ -140,6 +150,35 @@ class ProfilePageController extends GetxController {
   // Manuel yenileme için
   Future<void> refreshProfile() async {
     await fetchProfile();
+  }
+
+  Future<void> editClassLevel(String newClassLevel) async {
+    try {
+      isLoading.value = true;
+      error.value = null;
+
+      final user = supabase.auth.currentUser;
+      if (user == null) {
+        throw Exception("Kullanıcı tarafından oturum açılmamış");
+      }
+
+      final response = await supabase
+          .from("profiles")
+          .update({"class_level": newClassLevel})
+          .eq("id", user.id)
+          .select();
+
+      debugPrint("Kullanıcı sınıf seviyesi başarıyla güncellendi");
+      userClass.value = newClassLevel;
+    } on PostgrestException catch (e) {
+      error.value = "Veritabanı hatası: ${e.message}";
+      debugPrint("PostreSQL Error: ${e.message}");
+    } catch (e) {
+      error.value = "Genel hata: $e";
+      debugPrint("General error: $e");
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   // Getter'lar - UI'da kullanmak için
