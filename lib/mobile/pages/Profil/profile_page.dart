@@ -448,6 +448,7 @@ class ProfilePage extends GetView<ProfilePageController> {
                                             "Sınıf Seviyeni Değiştir",
                                           ),
                                           content: Column(
+                                            mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Row(
                                                 mainAxisAlignment:
@@ -459,36 +460,83 @@ class ProfilePage extends GetView<ProfilePageController> {
                                                 ],
                                               ),
                                               Obx(() {
-                                                return DropdownMenu<String>(
-                                                  initialSelection: controller
+                                                return DropdownButton<String>(
+                                                  items: const [
+                                                    DropdownMenuItem(
+                                                      value: "Hazırlık",
+                                                      child: Text("Hazırlık"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      value: "9. Sınıf",
+                                                      child: Text("9. Sınıf"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      value: "10. Sınıf",
+                                                      child: Text("10. Sınıf"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      value: "11. Sınıf",
+                                                      child: Text("11. Sınıf"),
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      value: "12. Sınıf",
+                                                      child: Text("12. Sınıf"),
+                                                    ),
+                                                  ],
+                                                  value: controller
                                                       .selectedSinif
                                                       .value,
-                                                  onSelected:
-                                                      (String? newValue) {
-                                                        if (newValue != null) {
-                                                          controller
-                                                                  .selectedSinif
-                                                                  .value =
-                                                              newValue;
-                                                        }
-                                                      },
-                                                  dropdownMenuEntries: controller.siniflar
-                                                      .map((value) {
-                                                        return DropdownMenuEntry<
-                                                          String
-                                                        >(
-                                                          value: value,
-                                                          label: value,
-                                                        );
-                                                      })
-                                                      .toList(),
+                                                  onChanged: (value) {
+                                                    controller
+                                                            .selectedSinif
+                                                            .value =
+                                                        value;
+                                                  },
                                                 );
                                               }),
                                             ],
                                           ),
                                           actions: [
                                             //Burada kaldın
-
+                                            TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                                controller.selectedSinif =
+                                                    Rxn<String>();
+                                              },
+                                              child: const Text("İptal", style: TextStyle(color: Colors.red),),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                if (controller
+                                                            .selectedSinif
+                                                            .value !=
+                                                        null ||
+                                                    controller.selectedSinif !=
+                                                        Rxn<String>()) {
+                                                  debugPrint(
+                                                    "Sınıf Level güncelleniyor: ${controller.selectedSinif}",
+                                                  );
+                                                  await controller
+                                                      .editClassLevel(
+                                                        controller
+                                                            .selectedSinif
+                                                            .value,
+                                                      );
+                                                  debugPrint(
+                                                    "Sınıf Level başarıyla güncellendi: ${controller.selectedSinif.value}",
+                                                  );
+                                                  Get.back();
+                                                  Get.snackbar(
+                                                    "Sınıf Seviyesi",
+                                                    "Sınıf Seviyeniz başarıyla güncellendi",
+                                                  );
+                                                  controller.selectedSinif =
+                                                      Rxn<String>();
+                                                }
+                                              },
+                                              child: const Text("Ayarla"),
+                                            ),
                                           ],
                                         );
                                       },

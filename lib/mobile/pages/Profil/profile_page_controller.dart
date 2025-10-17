@@ -7,7 +7,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePageController extends GetxController {
   final supabase = Supabase.instance.client;
-
   var userName = Rxn<String>();
   var userClass = Rxn<String>();
   var createdAt = Rxn<DateTime>();
@@ -21,7 +20,7 @@ class ProfilePageController extends GetxController {
     '12. Sınıf',
   ];
 
-  late Rxn<String> selectedSinif = userClass;
+  var selectedSinif = Rxn<String>();
 
   @override
   void onInit() {
@@ -152,7 +151,7 @@ class ProfilePageController extends GetxController {
     await fetchProfile();
   }
 
-  Future<void> editClassLevel(String newClassLevel) async {
+  Future<void> editClassLevel(String? newClassLevel) async {
     try {
       isLoading.value = true;
       error.value = null;
