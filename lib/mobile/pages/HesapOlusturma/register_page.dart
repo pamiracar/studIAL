@@ -163,7 +163,9 @@ class RegisterPage extends GetView<RegisterPageController> {
                               flex: 1, // 50% genişlik
                               child: Obx(() {
                                 return Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0,
+                                  ),
                                   child: DropdownMenu<String>(
                                     initialSelection:
                                         controller.selectedSinif.value,
@@ -171,7 +173,8 @@ class RegisterPage extends GetView<RegisterPageController> {
                                         EdgeInsets.zero, // Tam genişlik için
                                     onSelected: (String? newValue) {
                                       if (newValue != null) {
-                                        controller.selectedSinif.value = newValue;
+                                        controller.selectedSinif.value =
+                                            newValue;
                                         debugPrint(
                                           controller.selectedSinif.value,
                                         );
@@ -193,9 +196,66 @@ class RegisterPage extends GetView<RegisterPageController> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 5),
+                        Row(
+                          children: [
+                            Obx(() {
+                              return Checkbox(
+                                value: controller.emailShow.value,
+                                onChanged: (value) {
+                                  controller.emailShow.value = value!;
+                                  debugPrint(
+                                    "Email Show: ${controller.emailShow.value}",
+                                  );
+                                },
+                              );
+                            }),
+                            const Text(
+                              "E-posta adresimi diğer kullanıcılara göster",
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
                         ElevatedButton(
-                          onPressed: controller.hesapOlustur,
+                          onPressed: () {
+                            if (controller.emailShow.value == false) {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  debugPrint("kullanıcı hayır demiş");
+                                  return AlertDialog(
+                                    title: const Text(
+                                      "Devam Etmeden Önce Dikkat!",
+                                    ),
+                                    content: const Text(
+                                      """Bu platform, kullanıcılar arası işbirliği ve doğrudan bağlantı üzerine kurulmuştur.
+
+E-posta adresinizi paylaşma iznini vermeniz, diğer kullanıcıların sizinle ilanlar, dersler ve ilgili konular hakkında iletişime geçebilmesi için zorunludur.
+
+Aksi takdirde, diğer kullanıcılar profilinizi görüp sizinle bağlantı kuramayacağı için uygulamanın amacına ulaşması mümkün olmayacaktır. Lütfen devam etmeden önce izin verin.""",
+                                      style: TextStyle(
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(onPressed:() {
+                                        controller.emailShow.value = true;
+                                        controller.hesapOlustur();
+                                      }, child: const Text("İzin ver ve devam et", style: TextStyle(color: Colors.blue),)),
+                                      TextButton(onPressed:() {
+                                        controller.emailShow.value = false;
+                                        controller.hesapOlustur();
+                                      }, child: const Text("İzin vermeden devam et", style: TextStyle(color: Colors.red),)),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              debugPrint("Kullanıcı email show ok");
+                              controller.hesapOlustur();
+                            }
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

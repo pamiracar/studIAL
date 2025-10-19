@@ -496,9 +496,7 @@ class ProfilePage extends GetView<ProfilePageController> {
                                               }),
                                             ],
                                           ),
-                                          actions: [
-                                            //Burada kaldın
-                                            TextButton(
+                                          actions: [                                            TextButton(
                                               onPressed: () {
                                                 Get.back();
                                                 controller.selectedSinif =

@@ -26,7 +26,8 @@ class RegisterPageController extends GetxController {
   late final String password;
   late final String name;
   late final String sinif;
-
+  late final bool emailAdressShow;
+  RxBool emailShow = false.obs;
   Future<void> hesapOlustur() async {
     try {
       if (registerFormKey.currentState!.validate()) {
@@ -34,8 +35,9 @@ class RegisterPageController extends GetxController {
         password = passwordController.text;
         name = nameController.text;
         sinif = selectedSinif.value;
+        emailAdressShow = emailShow.value;
         await auth.signUpOnly(email: email, password: password);
-        await auth.createProfile(name: name, gradeLevel: sinif);
+        await auth.createProfile(name: name, gradeLevel: sinif, emailShowValue: emailAdressShow);
         Get.back();
         Get.snackbar(
           "Hesap Oluşturuldu",

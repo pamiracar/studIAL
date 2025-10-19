@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:studial/mobile/pages/Anasayfa/anasayfa_controller.dart';
-import 'package:studial/mobile/pages/Profil/profile_page_controller.dart';
 
 class IlanCard extends GetView<AnasayfaController> {
   final String isim; // Kullanıcı adı

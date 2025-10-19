@@ -26,6 +26,7 @@ class AuthService {
   Future<void> createProfile({
     required String name,
     required String gradeLevel,
+    required bool emailShowValue,
   }) async {
     final userId = _supabase.auth.currentUser?.id;
 
@@ -44,6 +45,7 @@ class AuthService {
         'id': userId,
         'name': name,
         'class_level': gradeLevel,
+        "email_show":emailShowValue,
       });
     }
   }

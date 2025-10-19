@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:studial/main.dart';
 import 'package:studial/models/ilan.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
